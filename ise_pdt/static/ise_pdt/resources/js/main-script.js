@@ -1,3 +1,17 @@
+$(document).ready(function(){
+	
+	$('.project-tab').click(function(){
+		var tab_id = $(this).attr('data-tab');
+
+		$('.project-tab').removeClass('current');
+		$('.tabbed-div').removeClass('current');
+
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	})
+
+})
+
 $('.click-to-collapse').on('click', function(e) {
   var hello = $('.click-to-collapse').index(this);
 

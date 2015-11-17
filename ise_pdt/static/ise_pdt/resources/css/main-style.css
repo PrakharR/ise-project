@@ -116,6 +116,7 @@ a, a:visited, a:hover, a:active {
   display: inline-block;
   margin-left: 10px;
 }
+
 .project-nav-div {
   margin-left: 20px;
   display: none;
@@ -152,3 +153,55 @@ a, a:visited, a:hover, a:active {
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+
+
+
+
+/* project.html */
+
+.right-tabs {
+  border-bottom: 2px solid #3B3B3B;
+}
+
+.project-tab {
+  height: 40px;
+  background-color: #4F4F4F;
+  text-align: center;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.project-tab:hover {
+  background-color: #696969;
+}
+
+.project-tab.current {
+  background-color: #696969;
+}
+
+.tab-text:first-child {
+  border-right: 2px solid #3B3B3B;
+}
+
+.tab-text {
+  height: 100%;
+  font-size: 140%;
+  color: #fff;
+}
+
+.tab-text p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.tabbed-div {
+  display: none
+}
+
+.tabbed-div.current {
+  display:inherit;
+}
+
