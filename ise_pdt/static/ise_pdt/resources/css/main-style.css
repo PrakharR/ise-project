@@ -1,0 +1,154 @@
+html {
+  font-family: Open Sans, sans-serif;
+  font-size: 12px;
+  color: #3B3B3B;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1; /* ie 6/7 */
+}
+
+.app-interface {
+  height: 100vh;
+  width: 100vw;
+}
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
+}
+
+/* ---------------------------*/
+/* Top Section Of The Page */
+/* ---------------------------*/
+
+.top-bar {
+  background-color: #3B3B3B;
+  width: 100%;
+  height: 7%;
+  color: #fff;
+}
+
+.company-name {
+  font-size: 180%;
+  float: left;
+  margin-top: 0.9%;
+  margin-left: 2%;
+}
+
+.user-name {
+  font-size: 120%;
+  float: right;
+  margin-top: 1.3%;
+  margin-right: 40px;
+}
+
+
+/* ---------------------------*/
+/* Bottom Section Of The Page */
+/* ---------------------------*/
+
+.bottom-bar {
+  background-color: #3B3B3B;
+  width: 100%;
+  height: 3%;
+}
+
+
+/* ---------------------------*/
+/* Middle Section Of The Page */
+/* ---------------------------*/
+
+.middle-bar {
+  width: 100%;
+  height: 90%;
+}
+
+
+/* Left Navigation Part */
+
+.middle-bar .left-section {
+  height: 100%;
+  display: inline-block;
+  background-color: #3B3B3B;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
+}
+
+.left-section .left-navi {
+  display: block;
+  margin: 0 auto;
+  height: 100%;
+  width: 90%;
+  background-color: #4F4F4F;
+  overflow-y: auto;
+}
+
+.navi-project-set {
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 20px;
+  color: #fffffa;
+}
+
+.project-name-div {
+  font-size: 140%;
+  margin-bottom: 15px;
+}
+
+.project-name-div .click-to-collapse {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.project-name-div .project-name {
+  display: inline-block;
+  margin-left: 10px;
+}
+.project-nav-div {
+  margin-left: 20px;
+  display: none;
+}
+
+.project-nav-div .project-nav {
+  margin-bottom: 10px;
+}
+
+.show {
+  display: block;
+}
+
+
+/* Right Contents Part */
+
+.middle-bar .right-section {
+  height: 100%;
+  display: inline-block;
+}
+
+.project-boxes {
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.project-box {
+  display: block;
+  margin: 0 auto;
+  height: 200px;
+  width: 300px;
+  border: 4px solid #3B3B3B;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
