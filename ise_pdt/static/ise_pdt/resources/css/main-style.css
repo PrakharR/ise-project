@@ -158,14 +158,53 @@ a, a:visited, a:hover, a:active {
 
 
 
-/* project.html */
+/* project.html #CD5C5C */
+
+.right-heading-bar {
+  border-bottom: 2px solid #3B3B3B;
+  height: 40px;
+  background-color: #4F4F4F;
+}
+
+.heading-bar-back-button {
+  color: #fff;
+  font-size: 140%;
+  position: absolute;
+  top: 50%;
+  left: 1%;
+  transform: translateY(-50%);
+}
+
+.heading-bar-back-button p,
+.heading-bar-back-button i {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.heading-bar-project-title {
+  color: #fff;
+  font-size: 140%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.heading-bar-project-time {
+  color: #fff;
+  font-size: 140%;
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+}
 
 .right-tabs {
   border-bottom: 2px solid #3B3B3B;
 }
 
 .project-tab {
-  height: 40px;
+  height: 35px;
   background-color: #4F4F4F;
   text-align: center;
   transition: background-color 0.3s;
@@ -198,10 +237,10 @@ a, a:visited, a:hover, a:active {
 }
 
 .tabbed-div {
-  display: none
+  display: none;
 }
 
 .tabbed-div.current {
-  display:inherit;
+  display: inherit;
 }
 

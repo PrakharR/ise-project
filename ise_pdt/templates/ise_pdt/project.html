@@ -66,6 +66,20 @@
         {% endif %}
       </div>
       <div class="right-section col-xs-10">
+        <div class="right-heading-bar col-xs-12">
+          <a href="/ise_pdt/{{user.user_name}}">
+            <div class="heading-bar-back-button">
+              <i class="ion-chevron-left"></i>
+              <p>All Projects</p>
+            </div>
+          </a>
+          <div class="heading-bar-project-title">
+            {{project.project_name}}
+          </div>
+          <div class="heading-bar-project-time">
+            Total Time: {{project.project_total_time}}
+          </div>
+        </div>
         <div class="right-tabs col-xs-12">
           <div class="project-tab col-xs-6 current" data-tab="iteration">
             <div class="tab-text">
@@ -78,7 +92,7 @@
             </div>
           </div>
         </div>
-        <div class="tabbed-div" id="iteration">
+        <div class="tabbed-div current" id="iteration">
           Hello
         </div>
         <div class="tabbed-div" id="summary">
