@@ -1,0 +1,85 @@
+html {
+  font-family: Open Sans, sans-serif;
+  font-size: 12px;
+  color: #FFF;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1; /* ie 6/7 */
+}
+
+body {
+  background: #3B3B3B;
+}
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
+}
+
+#login {
+  background-color: #4F4F4F;
+  display: inline-block;
+  position: absolute;
+  padding: 30px 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+}
+
+#login h1 {
+  font-size: 200%;
+  margin-bottom: 20px;
+  font-weight: 800;
+}
+
+.control-label {
+  font-size: 140%;
+  margin-bottom: 20px;
+}
+
+.controls {
+  margin-top: 10px;
+}
+.controls input {
+  font-size: 100%;
+  color: #fff;
+  margin-bottom: 20px;
+  background: #3B3B3B;
+  border: none;
+  padding: 10px 50px;
+  border-bottom: solid 2px #C97B7B;
+  transition: border 0.3s;
+  text-align: center;
+}
+
+.controls input:focus {
+  outline: none;
+  border-bottom: solid 2px #CD5C5C;
+}
+
+button {
+  color: #ffffff;
+  background: #CD5C5C;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: none;
+  font-size: 140%;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  background: #C97B7B;
+  text-decoration: none;
+}
