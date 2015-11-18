@@ -6,7 +6,6 @@ $(document).ready(function(){
 	var start_time = 0;
 	var end_time = 0;
 	localStorage.setItem("total_time", 0);
-
 	
 	$('.project-tab').click(function(){
 		var tab_id = $(this).attr('data-tab');
@@ -19,13 +18,9 @@ $(document).ready(function(){
 	})
 	
 	$("#start_button").click(function(){
-
-		localStorage.setItem("total_time", 0);
-
 		start_time = new Date().valueOf();
 		
 		//localStorage.setItem("current_time", 0);
-
 		$("#pause_button").prop('disabled',false);
 		$("#start_button").prop('disabled',true);
 		timer_event = setInterval(start_timer, 1000);
@@ -44,40 +39,30 @@ $(document).ready(function(){
 		localStorage.setItem("total_time", temp_total_time);
 		// SEND temp_total_time to Database
 		if (temp_total_time < 60)
-			$("#total_time_record").html("0:00:"+pad(temp_total_time,2));
+			$("#total_time_record").html("00:00:"+pad(temp_total_time,2));
 		else if (temp_total_time < 3600)
-			$("#total_time_record").html("0:"+pad(Math.floor(temp_total_time/60),2)+":"+pad(temp_total_time%60,2));
+			$("#total_time_record").html("00:"+pad(Math.floor(temp_total_time/60),2)+":"+pad(temp_total_time%60,2));
 			else
-				$("#total_time_record").html((Math.floor(temp_total_time/3600))+":"+pad(Math.floor((temp_total_time%3600)/60),2)+":"+pad(temp_total_time%60,2));
-
+				$("#total_time_record").html(pad((Math.floor(temp_total_time/3600),2))+":"+pad(Math.floor((temp_total_time%3600)/60),2)+":"+pad(temp_total_time%60,2));
+		
 		$("#start_button").prop('disabled',false);
 		$("#pause_button").prop('disabled',true);
-		$("#time_record").html("0:00:00");
+		$("#time_record").html("00:00:00");
 	})
 	
 
 })
 
 function start_timer(){
-
-	var new_time = localStorage.getItem("total_time");
-	new_time = parseInt(new_time) + 1;
-	localStorage.setItem("total_time", new_time);
-	if (new_time < 60)
-		$("#time_record").html("0:00:"+new_time);
-	else if (new_time < 3600)
-		$("#time_record").html("0:"+Math.floor(new_time/60)+":"+new_time%60);
-}
-
 	//var new_time = localStorage.getItem("current_time");
 	new_time = parseInt(new_time) + 1;
 	//localStorage.setItem("current_time", new_time);
 	if (new_time < 60)
-		$("#time_record").html("0:00:"+pad(new_time,2));
+		$("#time_record").html("00:00:"+pad(new_time,2));
 	else if (new_time < 3600)
-		$("#time_record").html("0:"+pad(Math.floor(new_time/60),2)+":"+pad(new_time%60,2));
+		$("#time_record").html("00:"+pad(Math.floor(new_time/60),2)+":"+pad(new_time%60,2));
 		else
-			$("#time_record").html((Math.floor(new_time/3600))+":"+pad(Math.floor((new_time%3600)/60),2)+":"+pad(new_time%60,2));
+			$("#time_record").html(pad((Math.floor(new_time/3600),2))+":"+pad(Math.floor((new_time%3600)/60),2)+":"+pad(new_time%60,2));
 }
 
 function pad(n, width, z) {
@@ -85,6 +70,7 @@ function pad(n, width, z) {
   n = n + '';
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
+
 
 $('.click-to-collapse').on('click', function(e) {
   var hello = $('.click-to-collapse').index(this);

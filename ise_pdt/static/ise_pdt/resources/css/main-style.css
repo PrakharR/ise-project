@@ -150,10 +150,41 @@ a, a:visited, a:hover, a:active {
   height: 200px;
   width: 300px;
   border: 4px solid #3B3B3B;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.6);
+  -moz-box-shadow:    0px 5px 15px 0px rgba(50, 50, 50, 0.6);
+  box-shadow:         0px 5px 15px 0px rgba(50, 50, 50, 0.6);
+  text-align: center;
+  color: #fff;
+  background: #4F4F4F;
 }
 
+.project-box:first-of-type,
+.project-box:nth-of-type(1) {
+  margin-top: 60px;
+}
+
+.project-box .box-content {
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.2;
+}
+
+.project-box p {
+  
+  margin-bottom: 10px;
+  text-decoration: none;
+  
+}
+
+.box-content-title {
+  font-size: 140%;
+  background: #C97B7B;
+  padding: 5px;
+}
 
 
 
@@ -162,7 +193,7 @@ a, a:visited, a:hover, a:active {
 
 .right-heading-bar {
   border-bottom: 2px solid #3B3B3B;
-  height: 40px;
+  height: 35px;
   background-color: #4F4F4F;
 }
 
@@ -238,9 +269,99 @@ a, a:visited, a:hover, a:active {
 
 .tabbed-div {
   display: none;
+  margin-top: 74px;
 }
 
 .tabbed-div.current {
   display: inherit;
 }
 
+.project-info {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align:center;
+  font-size: 140%;
+  padding: 40px;
+  width: 50%;
+  line-height: 1.2;
+}
+
+.project-info p {
+  margin-bottom: 10px;
+}
+
+.project-info .info-name {
+  font-size: 180%;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.project-info .info-desc {
+  font-size: 120%;
+  margin-bottom: 40px;
+}
+
+.project-info .info-mini {
+  display: inline-block;
+  width: 40%;
+  float: right;
+}
+
+.project-info .info-mini:first-of-type {
+  float: left;
+}
+
+.info-mini p {
+  margin-bottom: 20px;
+}
+
+.info-label {
+  font-weight: 600;
+  background: #CD5C5C;
+  padding: 10px;
+  color: #fff;
+}
+
+#timer {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align:center;
+  font-size: 140%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 50px;
+}
+
+#timer p {
+  margin-bottom: 10px;
+}
+
+#timer button {
+  color: #ffffff;
+  background: #CD5C5C;
+  padding: 5px 15px;
+  text-decoration: none;
+  border: none;
+  font-size: 90%;
+  cursor: pointer;
+  outline: none;
+  margin-top: 20px;
+}
+
+#timer button:first-of-type {
+  margin-right: 20px;
+}
+
+#timer button:hover {
+  background: #C97B7B;
+  text-decoration: none;
+}
+
+#time_record{
+	font-size: 450%;
+}

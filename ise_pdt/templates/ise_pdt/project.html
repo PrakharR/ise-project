@@ -23,6 +23,7 @@
 
     <!-- - - -Resources- - - -->
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style-m.css' %}">
 
     <!-- - - - -Font- - - - -->
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600' rel='stylesheet' type='text/css'>
@@ -39,7 +40,8 @@
         Company Name
       </div>
       <div class="user-name">
-        {{user.user_name}}
+        Welcome, {{user.username}}.
+        <a href="">Logout</a>.
       </div>
     </div>
     <div class="middle-bar">
@@ -52,11 +54,12 @@
               <div class="click-to-collapse">
                 <i class="ion-ios-arrow-right"></i>
               </div>
-              <a href="/ise_pdt/{{user.user_name}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
+              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
             </div>
             <div class="project-nav-div">
-              <h3 class="project-nav">Iteration</h3>
-              <h3 class="project-nav">Project Summary</h3>
+              <h3 class="project-nav">Development</h3>
+              <h3 class="project-nav">Defect Removal</h3>
+              <h3 class="project-nav">Management</h3>
             </div>
           </div>
           {% endfor %}
@@ -67,7 +70,7 @@
       </div>
       <div class="right-section col-xs-10">
         <div class="right-heading-bar col-xs-12">
-          <a href="/ise_pdt/{{user.user_name}}">
+          <a href="/ise_pdt/developer/{{user.username}}">
             <div class="heading-bar-back-button">
               <i class="ion-chevron-left"></i>
               <p>All Projects</p>
@@ -81,27 +84,82 @@
           </div>
         </div>
         <div class="right-tabs col-xs-12">
-          <div class="project-tab col-xs-6 current" data-tab="iteration">
+          <div class="project-tab col-xs-3 current" data-tab="main">
             <div class="tab-text">
-              <p>Iteration</p>
+              <p>Main</p>
             </div>
           </div>
-          <div class="project-tab col-xs-6" data-tab="summary">
+          <div class="project-tab col-xs-3" data-tab="development">
             <div class="tab-text">
-              <p>Project Summary</p>
+              <p>Development</p>
+            </div>
+          </div>
+          <div class="project-tab col-xs-3" data-tab="defect">
+            <div class="tab-text">
+              <p>Defect Removal</p>
+            </div>
+          </div>
+          <div class="project-tab col-xs-3" data-tab="management">
+            <div class="tab-text">
+              <p>Management</p>
             </div>
           </div>
         </div>
-        <div class="tabbed-div current" id="iteration">
-			<div id="timer">
-				Total time worked: <span id="total_time_record">0:00:00</span><br>
-				Currently spent time: <span id="time_record">0:00:00</span><br>
-				<button id="start_button">START</button>
-				<button id="pause_button" disabled>PAUSE</button>
+        <div class="tabbed-div current" id="main">
+          <div class="project-info">
+            <p class="info-name">{{project.project_name}}</p>
+            <p class="info-desc">{{project.project_description}}</p>
+            <div class="info-mini">
+              <p>Project {{project.project_name}} was created on:</p>
+              <p class="info-label">{{project.project_creation_date}}</p>
+            </div>
+            <div class="info-mini">
+              <p>Total time spent on this project is:</p>
+              <p class="info-label">{{project.project_total_time}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="tabbed-div" id="development">
+		  <div id="timer">
+            <p>
+            Total Development Time:
+		    <span id="total_time_record">00:00:00
+		    </span>
+            </p>
+		    <p>Current time spent:</p> 
+		    <span id="time_record">00:00:00</span>
+		    <br>
+		    <button id="start_button">START</button>
+		    <button id="pause_button" disabled>PAUSE</button>
 			</div>
         </div>
-        <div class="tabbed-div" id="summary">
-          Hi
+        <div class="tabbed-div" id="defect">
+          <div id="timer">
+            <p>
+            Total Defect Removal Time:
+		    <span id="total_time_record">00:00:00
+		    </span>
+            </p>
+		    <p>Current time spent:</p> 
+		    <span id="time_record">00:00:00</span>
+		    <br>
+		    <button id="start_button">START</button>
+		    <button id="pause_button" disabled>PAUSE</button>
+			</div>
+        </div>
+        <div class="tabbed-div" id="management">
+          <div id="timer">
+            <p>
+            Total Management Time:
+		    <span id="total_time_record">00:00:00
+		    </span>
+            </p>
+		    <p>Current time spent:</p> 
+		    <span id="time_record">00:00:00</span>
+		    <br>
+		    <button id="start_button">START</button>
+		    <button id="pause_button" disabled>PAUSE</button>
+			</div>
         </div>
       </div>
     </div>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  {% load staticfiles %}
+
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/' %}" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="description" content="ISE Project" />
+  <meta name="author" content="Awesome Group" />
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <!-- CSS FILE LINKS -->
+
+    <!-- - - -Vendors- - - -->
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/reset.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/bootstrap-custom.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/ionicons.min.css' %}">
+
+
+    <!-- - - -Resources- - - -->
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style-m.css' %}">
+
+    <!-- - - - -Font- - - - -->
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600' rel='stylesheet' type='text/css'>
+
+
+  <title>ISE Project</title>
+</head>
+{% for user in the_user %}
+{% for project in the_project %}
+<body>
+  <div class="app-interface">
+    <div class="top-bar">
+      <div class="company-name">
+        Company Name
+      </div>
+      <div class="user-name">
+        {{user.user_name}}
+      </div>
+    </div>
+    <div class="middle-bar">
+      <div class="left-section col-xs-2">
+        {% if list_of_projects %}
+        <div class="left-navi">
+          {% for project in list_of_projects %}
+          <div class="navi-project-set">
+            <div class="project-name-div">
+              <div class="click-to-collapse">
+                <i class="ion-ios-arrow-right"></i>
+              </div>
+              <a href="/ise_pdt/{{user.user_name}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
+            </div>
+            <div class="project-nav-div">
+              <h3 class="project-nav">Iteration</h3>
+              <h3 class="project-nav">Project Summary</h3>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p>No projects are available.</p>
+        {% endif %}
+      </div>
+      <div class="right-section col-xs-10">
+        <div class="right-heading-bar col-xs-12">
+          <a href="/ise_pdt/{{user.user_name}}">
+            <div class="heading-bar-back-button">
+              <i class="ion-chevron-left"></i>
+              <p>All Projects</p>
+            </div>
+          </a>
+          <div class="heading-bar-project-title">
+            {{project.project_name}}
+          </div>
+          <div class="heading-bar-project-time">
+            Total Time: {{project.project_total_time}}
+          </div>
+        </div>
+        <div class="right-tabs col-xs-12">
+          <div class="project-tab col-xs-6 current" data-tab="iteration">
+            <div class="tab-text">
+              <p>Iteration</p>
+            </div>
+          </div>
+          <div class="project-tab col-xs-6" data-tab="summary">
+            <div class="tab-text">
+              <p>Project Summary</p>
+            </div>
+          </div>
+        </div>
+        <div class="tabbed-div current" id="iteration">
+			<div id="timer">
+				Total time worked: <span id="total_time_record">0:00:00</span><br><br>
+				<span id="time_record">0:00:00</span><br><br><br>
+				<button class="timer_button" id="start_button">START</button>
+				<button class="timer_button" id="pause_button" disabled>PAUSE</button>
+			</div>
+        </div>
+        <div class="tabbed-div" id="summary">
+			<table id="project_summary_table">
+				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
+				<tr>
+					<td class="project_summary_left_col">Date started: </td><td class="project_summary_right_col">xxxxx</td>
+				</tr> 
+				<tr>
+					<td class="project_summary_left_col">Active Iteration: </td><td class="project_summary_right_col">xxxxx</td>
+				</tr> 
+				<tr>
+					<td class="project_summary_left_col">Current Phase: </td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
+				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
+				<tr class="col_with_border">
+					<td class="project_summary_left_col">Size-based Metric</td><td class="project_summary_right_col"></td>
+				</tr>
+				<tr class="col_with_border col_with_grey_backgroud">
+					<td class="project_summary_left_col">Estimated Delivered line of code:</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr class="col_with_border">
+					<td class="project_summary_left_col">Delivered line of code:</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr class="col_with_border col_with_grey_backgroud">
+					<td class="project_summary_left_col">Time-effort:</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr class="col_with_border">
+					<td class="project_summary_left_col">Estimated Time-effort:</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr class="col_with_border col_with_grey_backgroud">
+					<td class="project_summary_left_col">Productivity:</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
+				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
+				<tr class="col_with_border">
+					<td class="project_summary_left_col">Quality Metric</td><td class="project_summary_right_col"></td>
+				</tr>
+				<tr class="col_with_border col_with_grey_backgroud">
+					<td class="project_summary_left_col">Total number of defect injected:</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr class="col_with_border">
+					<td class="project_summary_left_col">Total number of defect removed:</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr class="col_with_border col_with_grey_backgroud">
+					<td class="project_summary_left_col">Defect Injection rete:</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr class="col_with_border">
+					<td class="project_summary_left_col">Defect Removal rate:</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr class="col_with_border col_with_grey_backgroud">
+					<td class="project_summary_left_col">Defect density</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+				<tr class="col_with_border">
+					<td class="project_summary_left_col">Yield</td><td class="project_summary_right_col">xxxxx</td>
+				</tr>
+			</table>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-bar">
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT FILE LINKS -->
+  <script src="{% static 'ise_pdt/vendors/js/jquery-2.1.4.min.js' %}"></script>
+  <script src="{% static 'ise_pdt/resources/js/main-script.js' %}"></script>
+</body>
+{% endfor %}
+{% endfor %}
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  {% load staticfiles %}
+
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/' %}" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="description" content="ISE Project" />
+  <meta name="author" content="Awesome Group" />
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <!-- CSS FILE LINKS -->
+
+    <!-- - - -Vendors- - - -->
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/reset.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/bootstrap-custom.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/ionicons.min.css' %}">
+
+
+    <!-- - - -Resources- - - -->
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style-m.css' %}">
+    <!-- - - - -Font- - - - -->
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600' rel='stylesheet' type='text/css'>
+
+
+  <title>ISE Project</title>
+</head>
+<body>
+  <div class="app-interface">
+    <div class="top-bar">
+      <div class="company-name">
+        Company Name
+      </div>
+      <div class="user-name">
+        {{user_name}}
+      </div>
+    </div>
+    <div class="middle-bar">
+      <div class="left-section col-xs-2">
+        {% if list_of_projects %}
+        <div class="left-navi">
+          {% for project in list_of_projects %}
+          <div class="navi-project-set">
+            <div class="project-name-div">
+              <div class="click-to-collapse">
+                <i class="ion-ios-arrow-right"></i>
+              </div>
+              <a href="/ise_pdt/{{user_name}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
+            </div>
+            <div class="project-nav-div">
+              <h3 class="project-nav">Iteration</h3>
+              <h3 class="project-nav">Project Summary</h3>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p>No projects are available.</p>
+        {% endif %}
+      </div>
+      <div class="right-section col-xs-10 manager-right-container">
+        {% if list_of_projects %}
+		<span class="manager-right-top-section">Projects<input class="project-search-input" placeholder="Search"></input></span>
+        <hr>
+		<table id="project-list">
+			<tr class="project-list-header"><td class="project-list-td">Project Name</td><td class="project-list-td">Starting Date</td></tr>
+          {% for project in list_of_projects %}
+            <tr class="project-list-row">
+				<td class="project-list-td"><a class="href_no_underline" href="/ise_pdt/{{user_name}}/{{project.id}}">{{project.project_name}}</a></td>
+				<td class="project-list-td">XXXXX</td>
+			</tr>
+		  {% endfor %}
+        </table>
+        {% else %}
+        <p>No projects are available.</p>
+        {% endif %}
+		<br><a href="#" class="manager-right-top-section href_no_underline href_grey">+ New Project</a>
+      </div>
+    </div>
+    <div class="bottom-bar">
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT FILE LINKS -->
+  <script src="{% static 'ise_pdt/vendors/js/jquery-2.1.4.min.js' %}"></script>
+  <script src="{% static 'ise_pdt/resources/js/main-script.js' %}"></script>
+</body>
+</html>

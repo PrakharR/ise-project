@@ -23,6 +23,7 @@
 
     <!-- - - -Resources- - - -->
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style-m.css' %}">
 
     <!-- - - - -Font- - - - -->
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600' rel='stylesheet' type='text/css'>
@@ -37,7 +38,8 @@
         Company Name
       </div>
       <div class="user-name">
-        {{user_name}}
+        Welcome, {{username}}. 
+        <a href="">Logout</a>.
       </div>
     </div>
     <div class="middle-bar">
@@ -50,11 +52,12 @@
               <div class="click-to-collapse">
                 <i class="ion-ios-arrow-right"></i>
               </div>
-              <a href="/ise_pdt/{{user_name}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
+              <a href="/ise_pdt/developer/{{username}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
             </div>
             <div class="project-nav-div">
-              <h3 class="project-nav">Iteration</h3>
-              <h3 class="project-nav">Project Summary</h3>
+              <h3 class="project-nav">Development</h3>
+              <h3 class="project-nav">Defect Removal</h3>
+              <h3 class="project-nav">Management</h3>
             </div>
           </div>
           {% endfor %}
@@ -68,9 +71,12 @@
         <div class="project-boxes">
           {% for project in list_of_projects %}
           <div class="col-xs-6">
-            <a href="/ise_pdt/{{user_name}}/{{project.id}}">
+            <a href="/ise_pdt/developer/{{username}}/{{project.id}}">
               <div class="project-box">
-
+                <div class="box-content">
+                  <p class="box-content-title">{{project.project_name}}</p>
+                  <p>{{project.project_description}}</p>
+                </div>
               </div>
             </a>
           </div>

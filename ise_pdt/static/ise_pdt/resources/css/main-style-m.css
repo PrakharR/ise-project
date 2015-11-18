@@ -1,0 +1,73 @@
+/*project-m.html*/
+
+#project_summary_table{
+	margin-left: 10%;
+	font-size: 15px;
+	width: 80%;
+}
+
+.project_summary_left_col{
+	width: 50%;
+}
+
+.project_summary_right_col{
+	width: 50%;
+}
+
+.col_with_border{
+	border: 1px;
+	border-style:solid;
+	border-color:black;
+	border-left: none;
+    border-right: none;
+}
+
+.col_with_grey_backgroud{
+	background-color: #E0E0E0;
+}
+
+/*index-m.html*/
+
+#project-list{
+	width:90%;
+	margin-left:5%;
+}
+
+.manager-right-container{
+	font-size: 20px;
+	margin-top: 30px;
+}
+
+.manager-right-top-section{
+	margin-left:30px;
+}
+
+.project-search-input{
+	width: 40%;
+	margin-left: 30px;
+}
+
+.project-list-header{
+	height:40px;
+}
+
+.project-list-row{
+	height: 50px;
+	border: 1px;
+	border-style:solid;
+	border-color:black;
+	border-left: none;
+    border-right: none;	
+}
+
+.project-list-td{
+	vertical-align: middle;
+}
+
+.href_no_underline{
+	text-decoration: none;
+}
+
+.href_grey{
+	color: grey;
+}
