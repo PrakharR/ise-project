@@ -54,12 +54,12 @@
               <div class="click-to-collapse">
                 <i class="ion-ios-arrow-right"></i>
               </div>
-              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
+              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}"><h2 class="project-name change_page">{{project.project_name}}</h2></a>
             </div>
             <div class="project-nav-div">
-              <h3 class="project-nav">Development</h3>
-              <h3 class="project-nav">Defect Removal</h3>
-              <h3 class="project-nav">Management</h3>
+              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}?task=dev"><h3 class="project-nav change_page">Development</h3></a>
+              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}?task=def"><h3 class="project-nav change_page">Defect Removal</h3></a>
+              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}?task=man"><h3 class="project-nav change_page">Management</h3></a>
             </div>
           </div>
           {% endfor %}
@@ -71,7 +71,7 @@
       <div class="right-section col-xs-10">
         <div class="right-heading-bar col-xs-12">
           <a href="/ise_pdt/developer/{{user.username}}">
-            <div class="heading-bar-back-button">
+            <div class="heading-bar-back-button change_page">
               <i class="ion-chevron-left"></i>
               <p>All Projects</p>
             </div>
@@ -84,23 +84,23 @@
           </div>
         </div>
         <div class="right-tabs col-xs-12">
-          <div class="project-tab col-xs-3 current" data-tab="main">
-            <div class="tab-text">
+          <div id="main_tab" class="project-tab col-xs-3 current" data-tab="main">
+            <div class="tab-text change_page">
               <p>Main</p>
             </div>
           </div>
-          <div class="project-tab col-xs-3" data-tab="development">
-            <div class="tab-text">
+          <div id="dev_tab" class="project-tab col-xs-3" data-tab="development">
+            <div class="tab-text change_page">
               <p>Development</p>
             </div>
           </div>
-          <div class="project-tab col-xs-3" data-tab="defect">
-            <div class="tab-text">
+          <div id="def_tab" class="project-tab col-xs-3" data-tab="defect">
+            <div class="tab-text change_page">
               <p>Defect Removal</p>
             </div>
           </div>
-          <div class="project-tab col-xs-3" data-tab="management">
-            <div class="tab-text">
+          <div id="man_tab" class="project-tab col-xs-3" data-tab="management">
+            <div class="tab-text change_page">
               <p>Management</p>
             </div>
           </div>
@@ -120,45 +120,45 @@
           </div>
         </div>
         <div class="tabbed-div" id="development">
-		  <div id="timer">
+		  <div id="timer_dev" class="timer">
             <p>
             Total Development Time:
-		    <span id="total_time_record">00:00:00
+		    <span id="total_time_record_dev" class="total_time_record">00:00:00
 		    </span>
             </p>
 		    <p>Current time spent:</p> 
-		    <span id="time_record">00:00:00</span>
+		    <span id="time_record_dev" class="time_record">00:00:00</span>
 		    <br>
-		    <button id="start_button">START</button>
-		    <button id="pause_button" disabled>PAUSE</button>
+		    <button id="start_button_dev" class="start_button">START</button>
+		    <button id="pause_button_dev" class="pause_button" disabled>PAUSE</button>
 			</div>
         </div>
         <div class="tabbed-div" id="defect">
-          <div id="timer">
+          <div id="timer_def" class="timer">
             <p>
             Total Defect Removal Time:
-		    <span id="total_time_record">00:00:00
+		    <span id="total_time_record_def" class="total_time_record">00:00:00
 		    </span>
             </p>
 		    <p>Current time spent:</p> 
-		    <span id="time_record">00:00:00</span>
+		    <span id="time_record_def" class="time_record">00:00:00</span>
 		    <br>
-		    <button id="start_button">START</button>
-		    <button id="pause_button" disabled>PAUSE</button>
+		    <button id="start_button_def" class="start_button">START</button>
+		    <button id="pause_button_def" class="pause_button" disabled>PAUSE</button>
 			</div>
         </div>
         <div class="tabbed-div" id="management">
-          <div id="timer">
+          <div id="timer_man" class="timer">
             <p>
             Total Management Time:
-		    <span id="total_time_record">00:00:00
+		    <span id="total_time_record_man" class="total_time_record">00:00:00
 		    </span>
             </p>
 		    <p>Current time spent:</p> 
-		    <span id="time_record">00:00:00</span>
+		    <span id="time_record_man" class="time_record">00:00:00</span>
 		    <br>
-		    <button id="start_button">START</button>
-		    <button id="pause_button" disabled>PAUSE</button>
+		    <button id="start_button_man" class="start_button">START</button>
+		    <button id="pause_button_man" class="pause_button" disabled>PAUSE</button>
 			</div>
         </div>
       </div>

@@ -324,7 +324,7 @@ a, a:visited, a:hover, a:active {
   color: #fff;
 }
 
-#timer {
+.timer {
   position: absolute;
   top: 53%;
   left: 50%;
@@ -337,11 +337,11 @@ a, a:visited, a:hover, a:active {
   padding: 50px;
 }
 
-#timer p {
+.timer p {
   margin-bottom: 10px;
 }
 
-#timer button {
+.timer button {
   color: #ffffff;
   background: #CD5C5C;
   padding: 5px 15px;
@@ -353,15 +353,20 @@ a, a:visited, a:hover, a:active {
   margin-top: 20px;
 }
 
-#timer button:first-of-type {
+.timer button:first-of-type {
   margin-right: 20px;
 }
 
-#timer button:hover {
+.timer button:hover {
   background: #C97B7B;
   text-decoration: none;
 }
 
-#time_record{
+.timer button:disabled {
+  background: #C0C0C0;
+  text-decoration: none;
+}
+
+.time_record{
 	font-size: 450%;
 }
