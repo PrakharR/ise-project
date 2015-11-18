@@ -81,29 +81,26 @@
           </div>
         </div>
         <div class="right-tabs col-xs-12">
-          <div class="project-tab col-xs-4 current" data-tab="development">
+          <div class="project-tab col-xs-6 current" data-tab="iteration">
             <div class="tab-text">
-              <p>Development</p>
+              <p>Iteration</p>
             </div>
           </div>
-          <div class="project-tab col-xs-4" data-tab="defect">
+          <div class="project-tab col-xs-6" data-tab="summary">
             <div class="tab-text">
-              <p>Defect Removal</p>
-            </div>
-          </div>
-          <div class="project-tab col-xs-4" data-tab="management">
-            <div class="tab-text">
-              <p>Management</p>
+              <p>Project Summary</p>
             </div>
           </div>
         </div>
-        <div class="tabbed-div current" id="development">
-          Hello
+        <div class="tabbed-div current" id="iteration">
+			<div id="timer">
+				Total time worked: <span id="total_time_record">0:00:00</span><br>
+				Currently spent time: <span id="time_record">0:00:00</span><br>
+				<button id="start_button">START</button>
+				<button id="pause_button" disabled>PAUSE</button>
+			</div>
         </div>
-        <div class="tabbed-div" id="defect">
-          Hi
-        </div>
-        <div class="tabbed-div" id="management">
+        <div class="tabbed-div" id="summary">
           Hi
         </div>
       </div>
