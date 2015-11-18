@@ -9,6 +9,7 @@ class Project(models.Model):
     project_creation_date = models.DateTimeField('date published')
     project_total_time = models.IntegerField(default=0)
     project_yield = models.FloatField(default=0)
+    project_description = models.CharField(max_length=600)
     #project_members = models.ManyToManyField(User, through='Assignment') 
     def __str__(self):              # __unicode__ on Python 2
         return self.project_name

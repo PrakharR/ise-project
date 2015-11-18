@@ -8,7 +8,7 @@ class UserAdmin(admin.ModelAdmin):
 
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('project_name', 'creating_user', 'project_creation_date', 
-                    'project_total_time', 'project_yield')
+                    'project_total_time', 'project_yield', 'project_description')
 
 class TimeLogAdmin(admin.ModelAdmin):
     list_display = ('user', 'project', 'log_creation_date', 'time_worked', 'work_type')

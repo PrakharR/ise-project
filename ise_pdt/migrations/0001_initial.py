@@ -2,14 +2,40 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
+        migrations.CreateModel(
+            name='Iteration',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('iteration_name', models.CharField(max_length=20)),
+                ('iteration_start_date', models.DateTimeField(verbose_name=b'date published')),
+                ('iteration_status', models.CharField(max_length=3, choices=[(b'ACT', b'Active'), (b'CLS', b'Closed'), (b'PND', b'Pending')])),
+                ('iteration_estimate_SLOC', models.IntegerField(default=0)),
+                ('iteration_SLOC', models.IntegerField(default=0)),
+                ('iteration_estimate_effort', models.FloatField()),
+                ('iteration_effort', models.FloatField()),
+                ('iteration_defect_injected', models.IntegerField(default=0)),
+                ('iteration_defect_removed', models.IntegerField(default=0)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Phase',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('phase_name', models.CharField(max_length=4, choices=[(b'INCP', b'Inception'), (b'ELAB', b'Elaboration'), (b'CONS', b'Sonstruction'), (b'TRAN', b'Transition')])),
+                ('phase_start_date', models.DateTimeField(verbose_name=b'date published')),
+                ('phase_status', models.CharField(max_length=3, choices=[(b'ACT', b'Active'), (b'CLS', b'Closed'), (b'PND', b'Pending')])),
+            ],
+        ),
         migrations.CreateModel(
             name='Project',
             fields=[
@@ -17,6 +43,8 @@ class Migration(migrations.Migration):
                 ('project_name', models.CharField(max_length=20)),
                 ('project_creation_date', models.DateTimeField(verbose_name=b'date published')),
                 ('project_total_time', models.IntegerField(default=0)),
+                ('project_yield', models.FloatField(default=0)),
+                ('creating_user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -24,27 +52,25 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('log_creation_date', models.DateTimeField(verbose_name=b'date published')),
-                ('time_worked', models.IntegerField(default=0)),
+                ('time_worked', models.DurationField()),
+                ('work_type', models.CharField(default=b'DEV', max_length=3, choices=[(b'DEV', b'Development'), (b'DEF', b'Defect removal'), (b'MAN', b'Management')])),
                 ('project', models.ForeignKey(to='ise_pdt.Project')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='User',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('user_name', models.CharField(max_length=20)),
-                ('user_email', models.CharField(max_length=100)),
-                ('user_password', models.CharField(max_length=20)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
-            model_name='timelog',
-            name='user',
-            field=models.ForeignKey(to='ise_pdt.User'),
+            model_name='phase',
+            name='project',
+            field=models.ForeignKey(to='ise_pdt.Project'),
         ),
         migrations.AddField(
-            model_name='project',
-            name='creating_user',
-            field=models.ForeignKey(to='ise_pdt.User'),
+            model_name='iteration',
+            name='phase',
+            field=models.ForeignKey(to='ise_pdt.Phase'),
+        ),
+        migrations.AddField(
+            model_name='iteration',
+            name='project',
+            field=models.ForeignKey(to='ise_pdt.Project'),
         ),
     ]
