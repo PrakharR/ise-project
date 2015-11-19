@@ -2,9 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import *
-
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'password')
+from django.contrib.auth.models import User
 
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('project_name', 'creating_user', 'project_creation_date', 
@@ -25,7 +23,6 @@ class PhaseAdmin(admin.ModelAdmin):
 #class WorkAdmin(admin.ModelAdmin):
 #    list_display = ('work_name',)
 
-#admin.site.register(User, UserAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(TimeLog, TimeLogAdmin)
 admin.site.register(Iteration, IterationAdmin)

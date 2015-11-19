@@ -44,6 +44,7 @@ class Migration(migrations.Migration):
                 ('project_creation_date', models.DateTimeField(verbose_name=b'date published')),
                 ('project_total_time', models.IntegerField(default=0)),
                 ('project_yield', models.FloatField(default=0)),
+                ('project_description', models.CharField(max_length=600)),
                 ('creating_user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),

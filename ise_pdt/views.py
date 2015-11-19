@@ -47,9 +47,7 @@ def logtime (request):
     l = TimeLog(user=user,project=project,log_creation_date=timezone.now(),time_worked=time_worked,work_type=work_type)
     l.save()
   
-  #Updating total_time parameter of all projects
-  list_of_projects = Project.objects.all()  
-  for project in list_of_projects:
+    #Updating total_time parameter of selected projects
     total_project_time_seconds = 0
     list_of_project_logs = TimeLog.objects.filter(project = project)
     for projectlog in list_of_project_logs:
@@ -210,11 +208,33 @@ def project(request, username, project_id):
   
   
 def project_m(request, username, project_id):
+    overall_total_project_time_seconds = 0
+    overall_total_project_time_minutes = 0
+    overall_total_project_time_hours = 0
+    
     the_project = Project.objects.get(id = project_id)
     the_user = User.objects.get(username = username)
+    overall_total_project_time_seconds = the_project.project_total_time
     
     list_of_projects = Project.objects.all().order_by('project_creation_date')
-    context = {'list_of_projects': list_of_projects, 'the_project': the_project, 'the_user': the_user}
+    list_of_users = User.objects.filter(groups__name='Developer').order_by('username')
+    
+    #Getting overall Seconds, Minutes and Hours for project
+    overall_total_project_time_hours = int(overall_total_project_time_seconds/3600)
+    overall_total_project_time_minutes = int(overall_total_project_time_seconds/60)    
+    overall_total_project_time_seconds = int(overall_total_project_time_seconds % 60)
+    
+    #Fixing output to html with leading zeroes for overall project
+    if overall_total_project_time_seconds < 10:
+      overall_total_project_time_seconds = '0'+str(overall_total_project_time_seconds)
+      
+    if overall_total_project_time_minutes < 10:
+      overall_total_project_time_minutes = '0'+str(overall_total_project_time_minutes)
+      
+    if overall_total_project_time_hours < 10:
+      overall_total_project_time_hours = '0'+str(overall_total_project_time_hours)
+    
+    context = {'list_of_projects': list_of_projects, 'list_of_users': list_of_users, 'the_project': the_project, 'the_user': the_user, 'overall_total_project_time_seconds': overall_total_project_time_seconds, 'overall_total_project_time_minutes': overall_total_project_time_minutes, 'overall_total_project_time_hours': overall_total_project_time_hours}
     
     if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
       return render(request, 'ise_pdt/project_m.html', context)

@@ -40,7 +40,51 @@
   font-size: 120%;
 }
 
+/* summary tab */
 
+.user-time-summary-table {
+  position: absolute;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+}
+
+.user-time-summary-table tr.data-row {
+  border-bottom: 1px solid #3B3B3B;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.user-time-summary-table tr.data-row:hover {
+  background: rgba(205, 92, 92, 0.1);
+  color: #CD5C5C;
+}
+
+.user-time-summary-table tr:first-of-type {
+  border-bottom: 2px solid #3B3B3B;
+}
+
+.user-time-summary-table td,
+.user-time-summary-table th {
+  padding: 25px;
+  text-align: center;
+}
+
+.user-time-summary-table th {
+  font-size: 140%;
+  
+}
+
+.user-time-summary-table td {
+  font-size: 120%;
+}
+
+.user-time-summary-table .border-row {
+  border-top: 2px solid #3B3B3B;
+}
+
+/*
 #project_summary_table{
 	margin-left: 10%;
 	font-size: 15px;
@@ -67,48 +111,53 @@
 	background-color: #E0E0E0;
 }
 
+*/
+
 /*index-m.html*/
 
-#project-list{
-	width:90%;
-	margin-left:5%;
+.title-border {
+  border-bottom: 4px solid #3B3B3B;
 }
 
-.manager-right-container{
-	font-size: 20px;
-	margin-top: 30px;
+.title-border .heading-bar-project-title {
+  font-size: 160%;
 }
 
-.manager-right-top-section{
-	margin-left:30px;
+/* Projects Table */
+
+.projects-table {
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
 }
 
-.project-search-input{
-	width: 40%;
-	margin-left: 30px;
+.projects-table tr.data-row {
+  border-bottom: 1px solid #3B3B3B;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
 }
 
-.project-list-header{
-	height:40px;
+.projects-table tr.data-row:hover {
+  background: rgba(205, 92, 92, 0.1);
+  color: #CD5C5C;
 }
 
-.project-list-row{
-	height: 50px;
-	border: 1px;
-	border-style:solid;
-	border-color:black;
-	border-left: none;
-    border-right: none;	
+.projects-table tr:first-of-type {
+  border-bottom: 2px solid #3B3B3B;
 }
 
-.project-list-td{
-	vertical-align: middle;
+.projects-table td,
+.projects-table th {
+  padding: 25px;
+  text-align: center;
 }
 
-.href_no_underline{
-	text-decoration: none;
+.projects-table th {
+  font-size: 160%;
 }
 
-.href_grey{
-	color: grey;
+.projects-table td {
+  font-size: 140%;
 }

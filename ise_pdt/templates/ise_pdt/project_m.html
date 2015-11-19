@@ -56,7 +56,7 @@
               <a href="/ise_pdt/manager/{{the_user.username}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
             </div>
             <div class="project-nav-div">
-              <h3 class="project-nav">Iteration</h3>
+              <h3 class="project-nav">Iterations</h3>
               <h3 class="project-nav">Summary</h3>
             </div>
           </div>
@@ -78,13 +78,13 @@
             {{the_project.project_name}}
           </div>
           <div class="heading-bar-project-time">
-            Total Time: {{the_project.project_total_time}}
+            Total Time: {{overall_total_project_time_hours}}:{{overall_total_project_time_minutes}}:{{overall_total_project_time_seconds}}
           </div>
         </div>
         <div class="right-tabs col-xs-12">
           <div class="project-tab col-xs-6 current" data-tab="iteration">
             <div class="tab-text">
-              <p>Iteration</p>
+              <p>Iterations</p>
             </div>
           </div>
           <div class="project-tab col-xs-6" data-tab="summary">
@@ -133,61 +133,95 @@
 		  </table>
         </div>
         <div class="tabbed-div" id="summary">
-			<table id="project_summary_table">
-				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
-				<tr>
-					<td class="project_summary_left_col">Date started: </td><td class="project_summary_right_col">xxxxx</td>
-				</tr> 
-				<tr>
-					<td class="project_summary_left_col">Active Iteration: </td><td class="project_summary_right_col">xxxxx</td>
-				</tr> 
-				<tr>
-					<td class="project_summary_left_col">Current Phase: </td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
-				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Size-based Metric</td><td class="project_summary_right_col"></td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Estimated Delivered line of code:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Delivered line of code:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Time-effort:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Estimated Time-effort:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Productivity:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
-				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Quality Metric</td><td class="project_summary_right_col"></td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Total number of defect injected:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Total number of defect removed:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Defect Injection rete:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Defect Removal rate:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Defect density</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Yield</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-			</table>
+          {% if list_of_projects %}
+		  <table class="user-time-summary-table">
+		    <tr>
+		      <th>Developer</th>
+		      <th>Development Time</th>
+		      <th>Defect Removal Time</th>
+		      <th>Management Time</th>
+		      <th>Total Time</th>
+		    </tr>
+		    {% for user in list_of_users %}
+		    <tr class="data-row">
+		      <td>{{user.username}}</td>
+		      <td>Initial</td>
+		      <td>Inception</td>
+		      <td>Closed</td>
+		      <td>1 Sept 2015 - Present</td>
+		    </tr>
+            {% endfor %}
+		    <tr class="data-row border-row">
+		      <td>Total</td>
+		      <td>Tran</td>
+		      <td>Transition</td>
+		      <td>Pending</td>
+		      <td>1 Sept 2015 - Present</td>
+		    </tr>
+		  </table>
+          {% endif %}
+      
+      
+      
+      
+      
+      
+      
+      <!-- <table id="project_summary_table">
+			  <tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
+			  <tr>
+			    <td class="project_summary_left_col">Date started: </td><td class="project_summary_right_col">xxxxx</td>
+			  </tr> 
+			  <tr>
+			    <td class="project_summary_left_col">Active Iteration: </td><td class="project_summary_right_col">xxxxx</td>
+			  </tr> 
+			  <tr>
+			    <td class="project_summary_left_col">Current Phase: </td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
+			  <tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
+			  <tr class="col_with_border">
+			    <td class="project_summary_left_col">Size-based Metric</td><td class="project_summary_right_col"></td>
+			  </tr>
+			  <tr class="col_with_border col_with_grey_backgroud">
+			    <td class="project_summary_left_col">Estimated Delivered line of code:</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr class="col_with_border">
+			    <td class="project_summary_left_col">Delivered line of code:</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr class="col_with_border col_with_grey_backgroud">
+			    <td class="project_summary_left_col">Time-effort:</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr class="col_with_border">
+			    <td class="project_summary_left_col">Estimated Time-effort:</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr class="col_with_border col_with_grey_backgroud">
+			    <td class="project_summary_left_col">Productivity:</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
+			  <tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
+			  <tr class="col_with_border">
+			    <td class="project_summary_left_col">Quality Metric</td><td class="project_summary_right_col"></td>
+			  </tr>
+			  <tr class="col_with_border col_with_grey_backgroud">
+			    <td class="project_summary_left_col">Total number of defect injected:</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr class="col_with_border">
+			    <td class="project_summary_left_col">Total number of defect removed:</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr class="col_with_border col_with_grey_backgroud">
+			    <td class="project_summary_left_col">Defect Injection rete:</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr class="col_with_border">
+			    <td class="project_summary_left_col">Defect Removal rate:</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr class="col_with_border col_with_grey_backgroud">
+			    <td class="project_summary_left_col">Defect density</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			  <tr class="col_with_border">
+			    <td class="project_summary_left_col">Yield</td><td class="project_summary_right_col">xxxxx</td>
+			  </tr>
+			</table> -->
         </div>
       </div>
     </div>

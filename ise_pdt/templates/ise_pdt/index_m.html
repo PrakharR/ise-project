@@ -54,7 +54,7 @@
               <a href="/ise_pdt/manager/{{username}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
             </div>
             <div class="project-nav-div">
-              <h3 class="project-nav">Iteration</h3>
+              <h3 class="project-nav">Iterations</h3>
               <h3 class="project-nav">Summary</h3>
             </div>
           </div>
@@ -64,23 +64,31 @@
         <p>No projects are available.</p>
         {% endif %}
       </div>
-      <div class="right-section col-xs-10 manager-right-container">
+      <div class="right-section col-xs-10">
+        <div class="right-heading-bar col-xs-12 title-border">
+          <div class="heading-bar-project-title">
+            Manage Projects
+          </div>
+          <div class="heading-bar-project-time">
+            + New Project
+          </div>
+        </div>
         {% if list_of_projects %}
-		<span class="manager-right-top-section">Projects<input class="project-search-input" placeholder="Search"></input></span>
-        <hr>
-		<table id="project-list">
-			<tr class="project-list-header"><td class="project-list-td">Project Name</td><td class="project-list-td">Starting Date</td></tr>
+        <table class="projects-table">
+          <tr>
+            <th>Project Name</th>
+            <th>Creation Date</th>
+          </tr>
           {% for project in list_of_projects %}
-            <tr class="project-list-row">
-				<td class="project-list-td"><a class="href_no_underline" href="/ise_pdt/manager/{{username}}/{{project.id}}">{{project.project_name}}</a></td>
-				<td class="project-list-td">XXXXX</td>
-			</tr>
-		  {% endfor %}
-        </table>
+          <tr class="data-row" onclick="location.href = '/ise_pdt/manager/{{username}}/{{project.id}}';">
+            <td>{{project.project_name}}</td>
+            <td>{{project.project_creation_date}}</td>
+          </tr>
+          {% endfor %}
+		</table>
         {% else %}
         <p>No projects are available.</p>
         {% endif %}
-		<br><a href="#" class="manager-right-top-section href_no_underline href_grey">+ New Project</a>
       </div>
     </div>
     <div class="bottom-bar">
