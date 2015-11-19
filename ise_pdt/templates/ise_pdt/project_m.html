@@ -31,8 +31,7 @@
 
   <title>ISE Project</title>
 </head>
-{% for user in the_user %}
-{% for project in the_project %}
+
 <body>
   <div class="app-interface">
     <div class="top-bar">
@@ -40,7 +39,7 @@
         Company Name
       </div>
       <div class="user-name">
-        Welcome, {{user.username}}. 
+        Welcome, {{the_user.username}}. 
         <a href="/ise_pdt/logout">Logout</a>.
       </div>
     </div>
@@ -54,7 +53,7 @@
               <div class="click-to-collapse">
                 <i class="ion-ios-arrow-right"></i>
               </div>
-              <a href="/ise_pdt/manager/{{user.username}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
+              <a href="/ise_pdt/manager/{{the_user.username}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
             </div>
             <div class="project-nav-div">
               <h3 class="project-nav">Iteration</h3>
@@ -69,17 +68,17 @@
       </div>
       <div class="right-section col-xs-10">
         <div class="right-heading-bar col-xs-12">
-          <a href="/ise_pdt/manager/{{user.username}}">
+          <a href="/ise_pdt/manager/{{the_user.username}}">
             <div class="heading-bar-back-button">
               <i class="ion-chevron-left"></i>
               <p>All Projects</p>
             </div>
           </a>
           <div class="heading-bar-project-title">
-            {{project.project_name}}
+            {{the_project.project_name}}
           </div>
           <div class="heading-bar-project-time">
-            Total Time: {{project.project_total_time}}
+            Total Time: {{the_project.project_total_time}}
           </div>
         </div>
         <div class="right-tabs col-xs-12">
@@ -201,6 +200,5 @@
   <script src="{% static 'ise_pdt/vendors/js/jquery-2.1.4.min.js' %}"></script>
   <script src="{% static 'ise_pdt/resources/js/main-script.js' %}"></script>
 </body>
-{% endfor %}
-{% endfor %}
+
 </html>

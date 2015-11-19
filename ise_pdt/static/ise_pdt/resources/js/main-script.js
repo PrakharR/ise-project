@@ -1,21 +1,23 @@
 var new_time = 0;
-
+//holding the setInterval event
+var timer_event;
+var start_time;
+var end_time;
+	
 $(document).ready(function(){
 	//to check whether we should redirect the user to individual task rather than the main page
-	check_url_target();
+	localStorage.setItem("location", "");
 	
-	//holding the setInterval event
-	var timer_event;
-	var start_time = 0;
-	var end_time = 0;
+	check_url_target();
+
+	start_time = 0;
+	end_time = 0;
 	// store the total time spent of each task
 	localStorage.setItem("total_time_dev", 0);
 	localStorage.setItem("total_time_def", 0);
 	localStorage.setItem("total_time_man", 0);
 	// store the current task working on 
-	localStorage.setItem("location", "");
 	// to record whether the most recent time record has been added to total time, in order to avoid double calculation when switching tab
-	localStorage.setItem("time_saved", "true"); 
 	
 	$('.project-tab').click(function(){
 		var tab_id = $(this).attr('data-tab');
@@ -55,15 +57,27 @@ $(document).ready(function(){
 	});
 	
 	$('.change_page').on("click", function() {  
-        pause_onclick();
+		pause_onclick();
     });	
 	
-
+	$("#dev_tab").click(function(){
+		localStorage.setItem("location", "_dev");
+		start_onclick()
+	})
+	
+	$("#def_tab").click(function(){
+		localStorage.setItem("location", "_def");
+		start_onclick()
+	})
+	
+	$("#man_tab").click(function(){
+		localStorage.setItem("location", "_man");
+		start_onclick()
+	})
 })
 
 function check_url_target(){
 	var url_target = location.search.split('task=')[1] ? location.search.split('task=')[1] : 'main';
-	console.log(url_target);
 	
 	if (url_target != "main"){
 		
@@ -88,6 +102,10 @@ function check_url_target(){
 				$("#management").addClass("current");
 				break;
 		}
+		localStorage.setItem("location","_"+url_target);
+		//var temp = localStorage.getItem("location");
+		
+		start_onclick();
 	}
 }
 
@@ -122,6 +140,23 @@ function pause_onclick(){
 	if (localStorage.getItem("time_saved") == "false"){
 		end_time = new Date().valueOf();
 		var time_to_add = Math.floor((end_time - start_time)/1000);
+		
+		var DataVals = { 
+			
+			user : $("#user_hidden").val(), 
+			project : $("#project_hidden").val(), 
+			
+			time_worked : time_to_add, 
+			work_type : (location.substring(1)).toUpperCase()
+		}
+
+		$.ajax({
+			  type: 'POST',
+			  url: "/ise_pdt/logtime",
+			  data: DataVals,
+			  dataType: "text",
+			  success: function() {}
+		});		
 		
 		//var time_to_add = parseInt(localStorage.getItem("current_time"));
 		var temp_total_time = parseInt(localStorage.getItem("total_time"+location));

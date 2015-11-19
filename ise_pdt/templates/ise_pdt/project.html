@@ -31,8 +31,6 @@
 
   <title>ISE Project</title>
 </head>
-{% for user in the_user %}
-{% for project in the_project %}
 <body>
   <div class="app-interface">
     <div class="top-bar">
@@ -40,7 +38,7 @@
         Company Name
       </div>
       <div class="user-name">
-        Welcome, {{user.username}}.
+        Welcome, {{the_user.username}}.
         <a href="/ise_pdt/logout">Logout</a>.
       </div>
     </div>
@@ -54,12 +52,12 @@
               <div class="click-to-collapse">
                 <i class="ion-ios-arrow-right"></i>
               </div>
-              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}"><h2 class="project-name change_page">{{project.project_name}}</h2></a>
+              <a href="/ise_pdt/developer/{{the_user.username}}/{{project.id}}"><h2 class="project-name change_page">{{project.project_name}}</h2></a>
             </div>
             <div class="project-nav-div">
-              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}?task=dev"><h3 class="project-nav change_page">Development</h3></a>
-              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}?task=def"><h3 class="project-nav change_page">Defect Removal</h3></a>
-              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}?task=man"><h3 class="project-nav change_page">Management</h3></a>
+              <a href="/ise_pdt/developer/{{the_user.username}}/{{project.id}}?task=dev"><h3 class="project-nav change_page">Development</h3></a>
+              <a href="/ise_pdt/developer/{{the_user.username}}/{{project.id}}?task=def"><h3 class="project-nav change_page">Defect Removal</h3></a>
+              <a href="/ise_pdt/developer/{{the_user.username}}/{{project.id}}?task=man"><h3 class="project-nav change_page">Management</h3></a>
             </div>
           </div>
           {% endfor %}
@@ -70,20 +68,20 @@
       </div>
       <div class="right-section col-xs-10">
         <div class="right-heading-bar col-xs-12">
-          <a href="/ise_pdt/developer/{{user.username}}">
+          <a href="/ise_pdt/developer/{{the_user.username}}">
             <div class="heading-bar-back-button change_page">
               <i class="ion-chevron-left"></i>
               <p>All Projects</p>
             </div>
           </a>
           <div class="heading-bar-project-title">
-            {{project.project_name}}
+            {{the_project.project_name}}
           </div>
           <div class="heading-bar-project-time">
-            Total Time: {{project.project_total_time}}
+            Total Time: {{overall_total_project_time_hours}}:{{overall_total_project_time_minutes}}:{{overall_total_project_time_seconds}}
           </div>
         </div>
-        <div class="right-tabs col-xs-12">
+        <div id="tab_bar" class="right-tabs col-xs-12">
           <div id="main_tab" class="project-tab col-xs-3 current" data-tab="main">
             <div class="tab-text change_page">
               <p>Main</p>
@@ -107,22 +105,22 @@
         </div>
         <div class="tabbed-div current" id="main">
           <div class="project-info">
-            <p class="info-name">{{project.project_name}}</p>
-            <p class="info-desc">{{project.project_description}}</p>
+            <p class="info-name">{{the_project.project_name}}</p>
+            <p class="info-desc">{{the_project.project_description}}</p>
             <div class="info-mini">
-              <p>Project {{project.project_name}} was created on:</p>
-              <p class="info-label">{{project.project_creation_date}}</p>
+              <p>Project {{the_project.project_name}} was created on:</p>
+              <p class="info-label">{{the_project.project_creation_date}}</p>
             </div>
             <div class="info-mini">
-              <p>Total time spent on this project is:</p>
-              <p class="info-label">{{project.project_total_time}}</p>
+              <p>Time you have spent on this project:</p>
+              <p class="info-label">{{total_project_time_hours}}:{{total_project_time_minutes}}:{{total_project_time_seconds}}</p>
             </div>
           </div>
         </div>
         <div class="tabbed-div" id="development">
 		  <div id="timer_dev" class="timer">
             <p>
-            Total Development Time:
+            Total Development Time: {{total_dev_time_hours}}:{{total_dev_time_minutes}}:{{total_dev_time_seconds}}
 		    <span id="total_time_record_dev" class="total_time_record">00:00:00
 		    </span>
             </p>
@@ -136,7 +134,7 @@
         <div class="tabbed-div" id="defect">
           <div id="timer_def" class="timer">
             <p>
-            Total Defect Removal Time:
+            Total Defect Removal Time: {{total_def_time_hours}}:{{total_def_time_minutes}}:{{total_def_time_seconds}}
 		    <span id="total_time_record_def" class="total_time_record">00:00:00
 		    </span>
             </p>
@@ -150,7 +148,7 @@
         <div class="tabbed-div" id="management">
           <div id="timer_man" class="timer">
             <p>
-            Total Management Time:
+            Total Management Time: {{total_man_time_hours}}:{{total_man_time_minutes}}:{{total_man_time_seconds}}
 		    <span id="total_time_record_man" class="total_time_record">00:00:00
 		    </span>
             </p>
@@ -171,7 +169,9 @@
   <!-- JAVASCRIPT FILE LINKS -->
   <script src="{% static 'ise_pdt/vendors/js/jquery-2.1.4.min.js' %}"></script>
   <script src="{% static 'ise_pdt/resources/js/main-script.js' %}"></script>
+  
+  <!-- Hidden django variables for js to read -->
+  <input type="hidden" id="user_hidden" value="{{ the_user.username }}">
+  <input type="hidden" id="project_hidden" value="{{ the_project.id }}">
 </body>
-{% endfor %}
-{% endfor %}
 </html>
