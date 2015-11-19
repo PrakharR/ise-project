@@ -69,10 +69,10 @@
       </div>
       <div class="right-section col-xs-10">
         <div class="right-heading-bar col-xs-12">
-          <a href="/ise_pdt/manager/{{user.username}}">
+          <a href="/ise_pdt/manager/{{user.username}}/{{project.id}}">
             <div class="heading-bar-back-button">
               <i class="ion-chevron-left"></i>
-              <p>All Projects</p>
+              <p>Project</p>
             </div>
           </a>
           <div class="heading-bar-project-title">
@@ -83,57 +83,13 @@
           </div>
         </div>
         <div class="right-tabs col-xs-12">
-          <div class="project-tab col-xs-6 current" data-tab="iteration">
-            <div class="tab-text">
-              <p>Iteration</p>
-            </div>
-          </div>
-          <div class="project-tab col-xs-6" data-tab="summary">
+          <div class="project-tab col-xs-12 current" data-tab="summary">
             <div class="tab-text">
               <p>Summary</p>
             </div>
           </div>
         </div>
-        <div class="tabbed-div current" id="iteration">
-		  <table class="iteration-table">
-		    <tr>
-		      <th>Iteration Number</th>
-		      <th>Name</th>
-		      <th>Phase</th>
-		      <th>Status</th>
-		      <th>Time</th>
-		    </tr>
-		    <tr class="data-row" onclick="location.href = '/ise_pdt/manager/admin/1/1';">
-		      <td>1</td>
-		      <td>Initial</td>
-		      <td>Inception</td>
-		      <td>Closed</td>
-		      <td>1 Sept 2015 - Present</td>
-		    </tr>
-		    <tr class="data-row">
-		      <td>2</td>
-		      <td>Elab</td>
-		      <td>Elaboration</td>
-		      <td>Active</td>
-		      <td>1 Sept 2015 - Present</td>
-		    </tr>
-		    <tr class="data-row">
-		      <td>3</td>
-		      <td>Const</td>
-		      <td>Construction</td>
-		      <td>Pending</td>
-		      <td>1 Sept 2015 - Present</td>
-		    </tr>
-		    <tr class="data-row">
-		      <td>4</td>
-		      <td>Tran</td>
-		      <td>Transition</td>
-		      <td>Pending</td>
-		      <td>1 Sept 2015 - Present</td>
-		    </tr>
-		  </table>
-        </div>
-        <div class="tabbed-div" id="summary">
+        <div class="tabbed-div current" id="summary">
 			<table id="project_summary_table">
 				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
 				<tr>

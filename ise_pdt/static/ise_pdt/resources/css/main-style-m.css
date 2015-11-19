@@ -1,4 +1,45 @@
-/*project-m.html*/
+/*project_m.html*/
+
+/* iteration tab */
+
+.iteration-table {
+  position: absolute;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+}
+
+.iteration-table tr.data-row {
+  border-bottom: 1px solid #3B3B3B;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.iteration-table tr.data-row:hover {
+  background: rgba(205, 92, 92, 0.1);
+  color: #CD5C5C;
+}
+
+.iteration-table tr:first-of-type {
+  border-bottom: 2px solid #3B3B3B;
+}
+
+.iteration-table td,
+.iteration-table th {
+  padding: 25px;
+  text-align: center;
+}
+
+.iteration-table th {
+  font-size: 140%;
+  
+}
+
+.iteration-table td {
+  font-size: 120%;
+}
+
 
 #project_summary_table{
 	margin-left: 10%;

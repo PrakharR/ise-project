@@ -351,6 +351,7 @@ a, a:visited, a:hover, a:active {
   cursor: pointer;
   outline: none;
   margin-top: 20px;
+  transition: background 0.3s;
 }
 
 .timer button:first-of-type {
