@@ -2,9 +2,19 @@
 
 /* iteration tab */
 
+.iteration-create-new-item {
+  position: absolute;
+  top: 15%;
+  right: 3%;
+  font-size: 140%;
+  border: 2px solid #3B3B3B;
+  padding: 8px;
+  cursor: pointer;
+}
+
 .iteration-table {
   position: absolute;
-  top: 13%;
+  top: 22%;
   left: 50%;
   transform: translateX(-50%);
   width: 95%;
@@ -42,9 +52,18 @@
 
 /* summary tab */
 
+.metrics-title {
+  position: absolute;
+  left: 50%;
+  top: 16%;
+  transform: translateX(-50%);
+  font-size: 180%;
+}
+
+
 .user-time-summary-table {
   position: absolute;
-  top: 13%;
+  top: 22%;
   left: 50%;
   transform: translateX(-50%);
   width: 95%;
@@ -52,13 +71,6 @@
 
 .user-time-summary-table tr.data-row {
   border-bottom: 1px solid #3B3B3B;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s;
-}
-
-.user-time-summary-table tr.data-row:hover {
-  background: rgba(205, 92, 92, 0.1);
-  color: #CD5C5C;
 }
 
 .user-time-summary-table tr:first-of-type {
@@ -82,6 +94,7 @@
 
 .user-time-summary-table .border-row {
   border-top: 2px solid #3B3B3B;
+  border-bottom: 2px solid #3B3B3B !important;
 }
 
 /*
@@ -115,13 +128,24 @@
 
 /*index-m.html*/
 
-.title-border {
-  border-bottom: 4px solid #3B3B3B;
+.project-manager-title {
+  position: absolute;
+  left: 50%;
+  top: 3%;
+  transform: translateX(-50%);
+  font-size: 180%;
 }
 
-.title-border .heading-bar-project-title {
-  font-size: 160%;
+.create-new-item {
+  position: absolute;
+  top: 2.5%;
+  right: 3%;
+  font-size: 140%;
+  border: 2px solid #3B3B3B;
+  padding: 8px;
+  cursor: pointer;
 }
+
 
 /* Projects Table */
 

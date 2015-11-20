@@ -217,7 +217,6 @@ def project_m(request, username, project_id):
     overall_total_project_time_seconds = the_project.project_total_time
     
     list_of_projects = Project.objects.all().order_by('project_creation_date')
-    list_of_users = User.objects.filter(groups__name='Developer').order_by('username')
     
     #Getting overall Seconds, Minutes and Hours for project
     overall_total_project_time_hours = int(overall_total_project_time_seconds/3600)
@@ -234,7 +233,7 @@ def project_m(request, username, project_id):
     if overall_total_project_time_hours < 10:
       overall_total_project_time_hours = '0'+str(overall_total_project_time_hours)
     
-    context = {'list_of_projects': list_of_projects, 'list_of_users': list_of_users, 'the_project': the_project, 'the_user': the_user, 'overall_total_project_time_seconds': overall_total_project_time_seconds, 'overall_total_project_time_minutes': overall_total_project_time_minutes, 'overall_total_project_time_hours': overall_total_project_time_hours}
+    context = {'list_of_projects': list_of_projects, 'the_project': the_project, 'the_user': the_user, 'overall_total_project_time_seconds': overall_total_project_time_seconds, 'overall_total_project_time_minutes': overall_total_project_time_minutes, 'overall_total_project_time_hours': overall_total_project_time_hours}
     
     if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
       return render(request, 'ise_pdt/project_m.html', context)

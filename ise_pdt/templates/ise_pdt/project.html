@@ -78,7 +78,7 @@
             {{the_project.project_name}}
           </div>
           <div class="heading-bar-project-time">
-            Total Time: {{overall_total_project_time_hours}}:{{overall_total_project_time_minutes}}:{{overall_total_project_time_seconds}}
+            Total Time: <span id="overall_total_project_time_hours">{{overall_total_project_time_hours}}</span>:<span id="overall_total_project_time_minutes">{{overall_total_project_time_minutes}}</span>:<span id="overall_total_project_time_seconds">{{overall_total_project_time_seconds}}</span>
           </div>
         </div>
         <div id="tab_bar" class="right-tabs col-xs-12">
@@ -88,7 +88,7 @@
             </div>
           </div>
           <div id="dev_tab" class="project-tab col-xs-3" data-tab="development">
-            <div class="tab-text change_page">
+            <div id="dev_tab_link" class="tab-text change_page">
               <p>Development</p>
             </div>
           </div>
@@ -113,16 +113,14 @@
             </div>
             <div class="info-mini">
               <p>Time you have spent on this project:</p>
-              <p class="info-label">{{total_project_time_hours}}:{{total_project_time_minutes}}:{{total_project_time_seconds}}</p>
+              <p class="info-label"><span id="total_project_time_hours">{{total_project_time_hours}}</span>:<span id="total_project_time_minutes">{{total_project_time_minutes}}</span>:<span id="total_project_time_seconds">{{total_project_time_seconds}}</span></p>
             </div>
           </div>
         </div>
         <div class="tabbed-div" id="development">
 		  <div id="timer_dev" class="timer">
             <p>
-            Total Development Time: {{total_dev_time_hours}}:{{total_dev_time_minutes}}:{{total_dev_time_seconds}}
-		    <span id="total_time_record_dev" class="total_time_record">00:00:00
-		    </span>
+            Total Development Time: <span id="total_dev_time_hours">{{total_dev_time_hours}}</span>:<span id="total_dev_time_minutes">{{total_dev_time_minutes}}</span>:<span id="total_dev_time_seconds">{{total_dev_time_seconds}}</span>
             </p>
 		    <p>Current time spent:</p> 
 		    <span id="time_record_dev" class="time_record">00:00:00</span>
@@ -134,9 +132,7 @@
         <div class="tabbed-div" id="defect">
           <div id="timer_def" class="timer">
             <p>
-            Total Defect Removal Time: {{total_def_time_hours}}:{{total_def_time_minutes}}:{{total_def_time_seconds}}
-		    <span id="total_time_record_def" class="total_time_record">00:00:00
-		    </span>
+            Total Defect Removal Time: <span id="total_def_time_hours">{{total_def_time_hours}}</span>:<span id="total_def_time_minutes">{{total_def_time_minutes}}</span>:<span id="total_def_time_seconds">{{total_def_time_seconds}}</span>
             </p>
 		    <p>Current time spent:</p> 
 		    <span id="time_record_def" class="time_record">00:00:00</span>
@@ -148,9 +144,7 @@
         <div class="tabbed-div" id="management">
           <div id="timer_man" class="timer">
             <p>
-            Total Management Time: {{total_man_time_hours}}:{{total_man_time_minutes}}:{{total_man_time_seconds}}
-		    <span id="total_time_record_man" class="total_time_record">00:00:00
-		    </span>
+            Total Management Time: <span id="total_man_time_hours">{{total_man_time_hours}}</span>:<span id="total_man_time_minutes">{{total_man_time_minutes}}</span>:<span id="total_man_time_seconds">{{total_man_time_seconds}}</span>
             </p>
 		    <p>Current time spent:</p> 
 		    <span id="time_record_man" class="time_record">00:00:00</span>

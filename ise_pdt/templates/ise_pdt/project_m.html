@@ -71,7 +71,7 @@
           <a href="/ise_pdt/manager/{{the_user.username}}">
             <div class="heading-bar-back-button">
               <i class="ion-chevron-left"></i>
-              <p>All Projects</p>
+              <p>Project Manager</p>
             </div>
           </a>
           <div class="heading-bar-project-title">
@@ -94,6 +94,10 @@
           </div>
         </div>
         <div class="tabbed-div current" id="iteration">
+          <p class="metrics-title">Iteration Manager</p>
+          <div class="iteration-create-new-item">
+          + New Iteration
+          </div>
 		  <table class="iteration-table">
 		    <tr>
 		      <th>Iteration Number</th>
@@ -133,26 +137,46 @@
 		  </table>
         </div>
         <div class="tabbed-div" id="summary">
+          <p class="metrics-title">Time Based Metrics</p>
           {% if list_of_projects %}
 		  <table class="user-time-summary-table">
 		    <tr>
-		      <th>Developer</th>
+		      <th>Phase</th>
 		      <th>Development Time</th>
 		      <th>Defect Removal Time</th>
 		      <th>Management Time</th>
 		      <th>Total Time</th>
-		    </tr>
-		    {% for user in list_of_users %}
+            </tr>
 		    <tr class="data-row">
-		      <td>{{user.username}}</td>
+		      <td>Inception</td>
 		      <td>Initial</td>
 		      <td>Inception</td>
 		      <td>Closed</td>
 		      <td>1 Sept 2015 - Present</td>
 		    </tr>
-            {% endfor %}
+            <tr class="data-row">
+		      <td>Elaboration</td>
+		      <td>Initial</td>
+		      <td>Inception</td>
+		      <td>Closed</td>
+		      <td>1 Sept 2015 - Present</td>
+		    </tr>
+            <tr class="data-row">
+		      <td>Construction</td>
+		      <td>Initial</td>
+		      <td>Inception</td>
+		      <td>Closed</td>
+		      <td>1 Sept 2015 - Present</td>
+		    </tr>
+            <tr class="data-row">
+		      <td>Transition</td>
+		      <td>Initial</td>
+		      <td>Inception</td>
+		      <td>Closed</td>
+		      <td>1 Sept 2015 - Present</td>
+		    </tr> 
 		    <tr class="data-row border-row">
-		      <td>Total</td>
+		      <td>Entire Project</td>
 		      <td>Tran</td>
 		      <td>Transition</td>
 		      <td>Pending</td>

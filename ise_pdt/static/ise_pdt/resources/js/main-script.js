@@ -3,19 +3,27 @@ var new_time = 0;
 var timer_event;
 var start_time;
 var end_time;
+var total_time_instance;
+var total_project_time_instance;
+var overall_total_project_time_instance;
 	
 $(document).ready(function(){
 	//to check whether we should redirect the user to individual task rather than the main page
 	localStorage.setItem("location", "");
-	
-	check_url_target();
 
 	start_time = 0;
 	end_time = 0;
 	// store the total time spent of each task
-	localStorage.setItem("total_time_dev", 0);
-	localStorage.setItem("total_time_def", 0);
-	localStorage.setItem("total_time_man", 0);
+	var x = parseInt($("#total_dev_time_seconds").html()) + parseInt($("#total_dev_time_minutes").html())*60 + parseInt($("#total_dev_time_hours").html())*3600;
+	localStorage.setItem("total_time_dev", x);
+	var x = parseInt($("#total_def_time_seconds").html()) + parseInt($("#total_def_time_minutes").html())*60 + parseInt($("#total_def_time_hours").html())*3600;
+	localStorage.setItem("total_time_def", x);
+	var x = parseInt($("#total_man_time_seconds").html()) + parseInt($("#total_man_time_minutes").html())*60 + parseInt($("#total_man_time_hours").html())*3600;
+	localStorage.setItem("total_time_man", x);
+	var x = parseInt($("#total_project_time_seconds").html()) + parseInt($("#total_project_time_minutes").html())*60 + parseInt($("#total_project_time_hours").html())*3600;
+	localStorage.setItem("total_project_time", x);	
+	var x = parseInt($("#overall_total_project_time_seconds").html()) + parseInt($("#overall_total_project_time_minutes").html())*60 + parseInt($("#overall_total_project_time_hours").html())*3600;
+	localStorage.setItem("overall_total_project_time", x);
 	// store the current task working on 
 	// to record whether the most recent time record has been added to total time, in order to avoid double calculation when switching tab
 	
@@ -74,38 +82,26 @@ $(document).ready(function(){
 		localStorage.setItem("location", "_man");
 		start_onclick()
 	})
+	
+	//check_url_target();
+	check_url_target_2();
 })
 
-function check_url_target(){
+function check_url_target_2(){
 	var url_target = location.search.split('task=')[1] ? location.search.split('task=')[1] : 'main';
 	
 	if (url_target != "main"){
-		
-		$("#main_tab").removeClass("current");
-		$("#dev_tab").removeClass("current");
-		$("#def_tab").removeClass("current");
-		$("#man_tab").removeClass("current");
-		$("#"+url_target+"_tab").addClass("current");
-		
-		$("#main").removeClass("current");
-		$("#development").removeClass("current");
-		$("#defect").removeClass("current");
-		$("#management").removeClass("current");
 		switch (url_target){
 			case "dev":
-				$("#development").addClass("current");
+				$("#dev_tab").click();
 				break;
 			case "def":
-				$("#defect").addClass("current");
+				$("#def_tab").click();
 				break;
 			case "man":
-				$("#management").addClass("current");
+				$("#man_tab").click();
 				break;
 		}
-		localStorage.setItem("location","_"+url_target);
-		//var temp = localStorage.getItem("location");
-		
-		start_onclick();
 	}
 }
 
@@ -116,6 +112,12 @@ function start_onclick(){
 	//localStorage.setItem("current_time", 0);
 	$("#pause_button"+location).prop('disabled',false);
 	$("#start_button"+location).prop('disabled',true);
+	
+	total_time_instance = localStorage.getItem("total_time"+location);
+	total_project_time_instance = localStorage.getItem("total_project_time");
+	overall_total_project_time_instance = localStorage.getItem("overall_total_project_time");
+	
+	
 	timer_event = setInterval(start_timer, 1000);
 }
 
@@ -123,6 +125,10 @@ function start_timer(){
 	var location = localStorage.getItem("location");
 	//var new_time = localStorage.getItem("current_time");
 	new_time = parseInt(new_time) + 1;
+	total_time_instance = parseInt(total_time_instance) + 1;
+	total_project_time_instance = parseInt(total_project_time_instance) + 1;
+	overall_total_project_time_instance = parseInt(overall_total_project_time_instance) + 1;
+	
 	//localStorage.setItem("current_time", new_time);
 	if (new_time < 60)
 		$("#time_record"+location).html("00:00:"+pad(new_time,2));
@@ -130,6 +136,45 @@ function start_timer(){
 		$("#time_record"+location).html("00:"+pad(Math.floor(new_time/60),2)+":"+pad(new_time%60,2));
 		else
 			$("#time_record"+location).html(pad((Math.floor(new_time/3600),2))+":"+pad(Math.floor((new_time%3600)/60),2)+":"+pad(new_time%60,2));
+			
+	if (total_time_instance < 60)
+		$("#total"+location+"_time_seconds").html(pad(total_time_instance,2));
+	else if (new_time < 3600){
+		$("#total"+location+"_time_minutes").html(pad(Math.floor(total_time_instance/60),2));
+		$("#total"+location+"_time_seconds").html(pad(total_time_instance%60,2));
+	}
+		else{
+			$("#total"+location+"_time_hours").html(pad(Math.floor(total_time_instance/3600),2));
+			$("#total"+location+"_time_minutes").html(pad(Math.floor(total_time_instance%3600/60),2));
+			$("#total"+location+"_time_seconds").html(pad(total_time_instance%60,2));			
+		}
+
+		
+	if (total_project_time_instance < 60)
+		$("#total_project_time_seconds").html(pad(total_project_time_instance,2));
+	else if (new_time < 3600){
+		$("#total_project_time_minutes").html(pad(Math.floor(total_project_time_instance/60),2));
+		$("#total_project_time_seconds").html(pad(total_project_time_instance%60,2));
+	}
+		else{
+			$("#total_project_time_hours").html(pad(Math.floor(total_project_time_instance/3600),2));
+			$("#total_project_time_minutes").html(pad(Math.floor(total_project_time_instance%3600/60),2));
+			$("#total_project_time_seconds").html(pad(total_project_time_instance%60,2));			
+		}
+		
+		
+	if (overall_total_project_time_instance < 60)
+		$("#overall_total_project_time_seconds").html(pad(overall_total_project_time_instance,2));
+	else if (new_time < 3600){
+		$("#overall_total_project_time_minutes").html(pad(Math.floor(overall_total_project_time_instance/60),2));
+		$("#overall_total_project_time_seconds").html(pad(overall_total_project_time_instance%60,2));
+	}
+		else{
+			$("#overall_total_project_time_hours").html(pad(Math.floor(overall_total_project_time_instance/3600),2));
+			$("#overall_total_project_time_minutes").html(pad(Math.floor(overall_total_project_time_instance%3600/60),2));
+			$("#overall_total_project_time_seconds").html(pad(overall_total_project_time_instance%60,2));			
+		}		
+		
 }
 
 function pause_onclick(){
@@ -162,13 +207,9 @@ function pause_onclick(){
 		var temp_total_time = parseInt(localStorage.getItem("total_time"+location));
 		temp_total_time = temp_total_time + time_to_add;
 		localStorage.setItem("total_time"+location, temp_total_time);
-		// SEND temp_total_time to Database
-		if (temp_total_time < 60)
-			$("#total_time_record"+location).html("00:00:"+pad(temp_total_time,2));
-		else if (temp_total_time < 3600)
-			$("#total_time_record"+location).html("00:"+pad(Math.floor(temp_total_time/60),2)+":"+pad(temp_total_time%60,2));
-			else
-				$("#total_time_record"+location).html(pad((Math.floor(temp_total_time/3600),2))+":"+pad(Math.floor((temp_total_time%3600)/60),2)+":"+pad(temp_total_time%60,2));
+		
+		localStorage.setItem("total_project_time", total_project_time_instance);
+		localStorage.setItem("overall_total_project_time", overall_total_project_time_instance);
 	}
 	
 	$("#start_button"+location).prop('disabled',false);
