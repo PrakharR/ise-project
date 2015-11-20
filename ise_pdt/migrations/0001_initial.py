@@ -13,6 +13,21 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Assignment',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('assignment_date', models.DateTimeField(auto_now_add=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Defect',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('defect_type', models.CharField(max_length=20)),
+                ('description', models.CharField(max_length=200)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Iteration',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -44,7 +59,10 @@ class Migration(migrations.Migration):
                 ('project_creation_date', models.DateTimeField(verbose_name=b'date published')),
                 ('project_total_time', models.IntegerField(default=0)),
                 ('project_yield', models.FloatField(default=0)),
-                ('project_description', models.CharField(max_length=600)),
+                ('project_description', models.CharField(default=b'This is the description', max_length=600)),
+                ('project_active_phase', models.CharField(default=b'', max_length=20)),
+                ('project_active_iteration', models.CharField(default=b'', max_length=20)),
+                ('project_status', models.CharField(default=b'PND', max_length=3, choices=[(b'ACT', b'Active'), (b'CLS', b'Closed'), (b'PND', b'Pending')])),
                 ('creating_user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -52,6 +70,8 @@ class Migration(migrations.Migration):
             name='TimeLog',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('phase', models.CharField(default=b'', max_length=20)),
+                ('iteration', models.CharField(default=b'', max_length=20)),
                 ('log_creation_date', models.DateTimeField(verbose_name=b'date published')),
                 ('time_worked', models.DurationField()),
                 ('work_type', models.CharField(default=b'DEV', max_length=3, choices=[(b'DEV', b'Development'), (b'DEF', b'Defect removal'), (b'MAN', b'Management')])),
@@ -73,5 +93,20 @@ class Migration(migrations.Migration):
             model_name='iteration',
             name='project',
             field=models.ForeignKey(to='ise_pdt.Project'),
+        ),
+        migrations.AddField(
+            model_name='defect',
+            name='iteration_of_injection',
+            field=models.ForeignKey(to='ise_pdt.Iteration'),
+        ),
+        migrations.AddField(
+            model_name='assignment',
+            name='project',
+            field=models.ForeignKey(to='ise_pdt.Project'),
+        ),
+        migrations.AddField(
+            model_name='assignment',
+            name='user',
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
         ),
     ]

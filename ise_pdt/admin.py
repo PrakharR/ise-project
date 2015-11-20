@@ -20,6 +20,12 @@ class IterationAdmin(admin.ModelAdmin):
 class PhaseAdmin(admin.ModelAdmin):
     list_display = ('project', 'phase_name', 'phase_start_date', 'phase_status')
 
+class DefectAdmin(admin.ModelAdmin):
+    list_display = ('defect_type', 'iteration_of_injection', 'description')
+
+class AssignmentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'project', 'assignment_date')
+
 #class WorkAdmin(admin.ModelAdmin):
 #    list_display = ('work_name',)
 
@@ -27,4 +33,6 @@ admin.site.register(Project, ProjectAdmin)
 admin.site.register(TimeLog, TimeLogAdmin)
 admin.site.register(Iteration, IterationAdmin)
 admin.site.register(Phase, PhaseAdmin)
+admin.site.register(Defect, DefectAdmin)
+admin.site.register(Assignment, AssignmentAdmin)
 #admin.site.register(Work, WorkAdmin)

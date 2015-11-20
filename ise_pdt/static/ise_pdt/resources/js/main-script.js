@@ -8,6 +8,7 @@ var total_project_time_instance;
 var overall_total_project_time_instance;
 	
 $(document).ready(function(){
+	localStorage.setItem("time_saved","true");
 	//to check whether we should redirect the user to individual task rather than the main page
 	localStorage.setItem("location", "");
 
@@ -85,6 +86,10 @@ $(document).ready(function(){
 	
 	//check_url_target();
 	check_url_target_2();
+
+	window.onbeforeunload = function(){
+		pause_onclick();
+	}
 })
 
 function check_url_target_2(){
@@ -200,6 +205,7 @@ function pause_onclick(){
 			  url: "/ise_pdt/logtime",
 			  data: DataVals,
 			  dataType: "text",
+			  async: false,
 			  success: function() {}
 		});		
 		

@@ -4,13 +4,21 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Project(models.Model):
+    STATUS_CHOICE = (
+        ('ACT', 'Active'),
+        ('CLS', 'Closed'),
+        ('PND', 'Pending'),
+    )
     creating_user = models.ForeignKey(User)
     project_name = models.CharField(max_length=20)
     project_creation_date = models.DateTimeField('date published')
     project_total_time = models.IntegerField(default=0)
     project_yield = models.FloatField(default=0)
-    project_description = models.CharField(max_length=600)
-    #project_members = models.ManyToManyField(User, through='Assignment') 
+    project_description = models.CharField(max_length=600,default='This is the description')
+    project_active_phase = models.CharField(max_length=20, default='')
+    project_active_iteration = models.CharField(max_length=20, default='')
+    project_status = models.CharField(max_length=3,choices=STATUS_CHOICE,default='PND')
+    #project_members = models.ManyToManyField(User, through='Assignment')
     def __str__(self):              # __unicode__ on Python 2
         return self.project_name
 
@@ -23,11 +31,18 @@ class TimeLog(models.Model):
     #assignment = models.ForeignKey(Assignment)
     user = models.ForeignKey(User)
     project = models.ForeignKey(Project)
+    phase = models.CharField(max_length=20, default='')
+    iteration = models.CharField(max_length=20, default='')
     log_creation_date = models.DateTimeField('date published')
     time_worked = models.DurationField()
     work_type = models.CharField(max_length=3,choices=WORK_CHOICE,default='DEV')
     def __str__(self):              # __unicode__ on Python 2
         return self.work_type
+
+class Assignment(models.Model):
+    user = models.ForeignKey(User)
+    project = models.ForeignKey(Project)
+    assignment_date = models.DateTimeField(auto_now_add=True)
 
 class Phase(models.Model):
     STATUS_CHOICE = (
@@ -67,3 +82,8 @@ class Iteration(models.Model):
     iteration_defect_removed = models.IntegerField(default=0)
     def __str__(self):              # __unicode__ on Python 2
         return self.iteration_name
+
+class Defect(models.Model):
+    defect_type = models.CharField(max_length=20)
+    iteration_of_injection = models.ForeignKey(Iteration)
+    description = models.CharField(max_length=200)
