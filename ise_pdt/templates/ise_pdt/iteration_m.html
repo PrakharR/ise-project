@@ -78,9 +78,6 @@
           <div class="heading-bar-project-title">
             {{the_project.project_name}} > Iteration {{the_iteration.iteration_name}}
           </div>
-          <div class="heading-bar-project-time">
-            Total Time: {{the_project.project_total_time}}
-          </div>
         </div>
         <div class="right-tabs col-xs-12">
           <div class="project-tab col-xs-6 current" data-tab="summary">
@@ -176,7 +173,10 @@
            
             <div class="controls">
               <button type="submit" class="btn btn-green">Save</button>
+              {% if the_iteration.iteration_status != 'ACT' %}
               <div class="delete-button btn" onclick="delete_iteration_prompt()">Delete Iteration</div>
+              {% endif %}
+              
             </div>
 
 
