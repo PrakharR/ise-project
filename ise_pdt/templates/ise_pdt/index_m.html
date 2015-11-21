@@ -15,21 +15,22 @@
 
   <!-- CSS FILE LINKS -->
 
-    <!-- - - -Vendors- - - -->
+  <!-- - - -Vendors- - - -->
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/reset.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/bootstrap-custom.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/ionicons.min.css' %}">
 
 
-    <!-- - - -Resources- - - -->
+  <!-- - - -Resources- - - -->
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style-m.css' %}">
-    <!-- - - - -Font- - - - -->
+  <!-- - - - -Font- - - - -->
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600' rel='stylesheet' type='text/css'>
 
 
   <title>ISE Project</title>
 </head>
+
 <body>
   <div class="app-interface">
     <div class="top-bar">
@@ -37,7 +38,7 @@
         Company Name
       </div>
       <div class="user-name">
-        Welcome, {{username}}. 
+        Welcome, {{username}}.
         <a href="/ise_pdt/logout">Logout</a>.
       </div>
     </div>
@@ -66,23 +67,35 @@
       </div>
       <div class="right-section col-xs-10">
         <p class="project-manager-title">Project Manager</p>
-          
-        <div class="create-new-item">
+
+        <div class="create-new-item" onclick="location.href = '/ise_pdt/manager/{{username}}/createproject/';">
           + New Project
         </div>
         {% if list_of_projects %}
         <table class="projects-table">
           <tr>
+            <th>Number</th>
             <th>Project Name</th>
+            <th>Status</th>
             <th>Creation Date</th>
           </tr>
           {% for project in list_of_projects %}
           <tr class="data-row" onclick="location.href = '/ise_pdt/manager/{{username}}/{{project.id}}';">
+            <td>{{forloop.counter}}</td>
             <td>{{project.project_name}}</td>
+            {% if project.project_status == "ACT" %}
+              <td class="iter-act">Active</td>
+              {% endif %}
+              {% if project.project_status == "CLS" %}
+              <td class="iter-cls">Closed</td>
+              {% endif %}
+              {% if project.project_status == "PND" %}
+              <td class="iter-pnd">Pending</td>
+              {% endif %}
             <td>{{project.project_creation_date}}</td>
           </tr>
           {% endfor %}
-		</table>
+        </table>
         {% else %}
         <p>No projects are available.</p>
         {% endif %}
@@ -97,4 +110,5 @@
   <script src="{% static 'ise_pdt/vendors/js/jquery-2.1.4.min.js' %}"></script>
   <script src="{% static 'ise_pdt/resources/js/main-script.js' %}"></script>
 </body>
+
 </html>

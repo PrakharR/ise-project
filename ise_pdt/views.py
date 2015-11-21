@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from django.contrib.auth.models import User
-from .models import Project, TimeLog, Phase, Iteration
+from .models import Project, TimeLog, Assignment, Phase, Iteration, Defect
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 
@@ -36,15 +36,25 @@ def logout_user(request):
 def logtime (request):
   total_project_time_seconds = 0
   username = project = work_type = ''
+  
   if request.POST:
     username = request.POST['user']
     user = User.objects.get(username=username)
     projectid = request.POST['project']
     project = Project.objects.get(id=projectid)
+    
+    the_phase = Phase.objects.filter(project=project).get(phase_status='ACT')
+    phase = the_phase.phase_name
+    
+    the_iteration = Iteration.objects.filter(project=project).get(iteration_status='ACT')
+    iteration = the_iteration.iteration_name
+    
     time = int(request.POST['time_worked'])
+    
     work_type = request.POST['work_type']
     time_worked = timedelta(seconds=time)
-    l = TimeLog(user=user,project=project,log_creation_date=timezone.now(),time_worked=time_worked,work_type=work_type)
+    
+    l = TimeLog(user=user,project=project,phase=phase,iteration=iteration,log_creation_date=timezone.now(),time_worked=time_worked,work_type=work_type)
     l.save()
   
     #Updating total_time parameter of selected projects
@@ -218,6 +228,8 @@ def project_m(request, username, project_id):
     
     list_of_projects = Project.objects.all().order_by('project_creation_date')
     
+    list_of_iterations = Iteration.objects.filter(project=the_project).order_by('phase', 'iteration_start_date')
+    
     #Getting overall Seconds, Minutes and Hours for project
     overall_total_project_time_hours = int(overall_total_project_time_seconds/3600)
     overall_total_project_time_minutes = int(overall_total_project_time_seconds/60)    
@@ -233,7 +245,7 @@ def project_m(request, username, project_id):
     if overall_total_project_time_hours < 10:
       overall_total_project_time_hours = '0'+str(overall_total_project_time_hours)
     
-    context = {'list_of_projects': list_of_projects, 'the_project': the_project, 'the_user': the_user, 'overall_total_project_time_seconds': overall_total_project_time_seconds, 'overall_total_project_time_minutes': overall_total_project_time_minutes, 'overall_total_project_time_hours': overall_total_project_time_hours}
+    context = {'list_of_projects': list_of_projects, 'list_of_iterations': list_of_iterations, 'the_project': the_project, 'the_user': the_user, 'overall_total_project_time_seconds': overall_total_project_time_seconds, 'overall_total_project_time_minutes': overall_total_project_time_minutes, 'overall_total_project_time_hours': overall_total_project_time_hours}
     
     if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
       return render(request, 'ise_pdt/project_m.html', context)
@@ -242,12 +254,136 @@ def project_m(request, username, project_id):
 
     
 def iteration_m(request, username, project_id, iteration_id):
-    the_project = Project.objects.filter(id = project_id)
-    the_user = User.objects.filter(username = username)
-    the_iteration = Iteration.objects.filter(id = iteration_id)
+    the_project = Project.objects.get(id = project_id)
+    the_user = User.objects.get(username = username)
+    the_iteration = Iteration.objects.get(id = iteration_id)
+    
     list_of_projects = Project.objects.all().order_by('project_creation_date')
+    
     context = {'list_of_projects': list_of_projects, 'the_project': the_project, 'the_user': the_user, 'the_iteration': the_iteration}
+    
     if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
       return render(request, 'ise_pdt/iteration_m.html', context)
     else:
       return HttpResponseRedirect('/ise_pdt/logout')
+    
+    
+    
+def create_project_m(request, username):
+    the_user = User.objects.get(username=username)
+    
+    list_of_projects = Project.objects.all().order_by('project_creation_date')
+    
+    if request.POST:
+      projectname = request.POST['projectname']
+      projectdescription = request.POST['projectdescription']
+      the_project = Project(creating_user=the_user,project_name=projectname,project_creation_date=timezone.now(),project_total_time=0,project_yield=0,project_description=projectdescription,project_active_phase='INCP',project_active_iteration='sample',project_status='PND')
+      the_project.save()
+      
+      #Create 4 Phases
+      phase_incp = Phase(project=the_project,phase_name='INCP',phase_start_date=timezone.now(),phase_status='PND')
+      phase_elab = Phase(project=the_project,phase_name='ELAB',phase_start_date=timezone.now(),phase_status='PND')
+      phase_cons = Phase(project=the_project,phase_name='CONS',phase_start_date=timezone.now(),phase_status='PND')
+      phase_tran = Phase(project=the_project,phase_name='TRAN',phase_start_date=timezone.now(),phase_status='PND')
+      phase_incp.save()
+      phase_elab.save()
+      phase_cons.save()
+      phase_tran.save()
+      
+      #Create Dummy Iteration
+      the_iteration = Iteration(project=the_project,phase=phase_incp,iteration_name='Sample',iteration_start_date=timezone.now(),iteration_status='ACT',iteration_estimate_SLOC=0,iteration_SLOC=0,iteration_estimate_effort=0,iteration_effort=0,iteration_defect_injected=0,iteration_defect_removed=0)
+
+      the_iteration.save()
+      
+      the_project_id = str(the_project.id)
+      
+      return HttpResponseRedirect('/ise_pdt/manager/'+the_user.username+'/'+the_project_id+'/')
+    
+    context = {'username': username, 'list_of_projects': list_of_projects}
+    
+    if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
+      return render(request, 'ise_pdt/create_project_m.html', context)
+    else:
+      return HttpResponseRedirect('/ise_pdt/logout')
+    
+    
+def edit_project_m(request, username, project_id):
+    the_project = Project.objects.get(id=project_id)
+    
+    if request.POST:
+      projectname = request.POST['projectname']
+      projectyield = request.POST['projectyield']
+      projectdescription = request.POST['projectdescription']
+      projectstatus = request.POST['projectstatus']
+      
+      the_project.project_name = projectname
+      the_project.project_yield = projectyield
+      the_project.project_description = projectdescription
+      the_project.project_status = projectstatus
+      
+      the_project.save()
+    
+    if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
+      return HttpResponseRedirect('/ise_pdt/manager/'+username+'/'+project_id+'/')
+    else:
+      return HttpResponseRedirect('/ise_pdt/logout')
+
+def delete_project_m(request, username, project_id):
+    the_project = Project.objects.get(id=project_id)
+    
+    Project.objects.get(id=project_id).delete()
+    Iteration.objects.filter(project=the_project).delete()
+    Phase.objects.filter(project=the_project).delete()
+    TimeLog.objects.filter(project=the_project).delete()
+    
+    return HttpResponseRedirect('/ise_pdt/manager/'+username+'/')
+    
+    
+def create_iteration_m(request, username, project_id):
+    the_user = User.objects.get(username=username)
+    the_project = Project.objects.get(id=project_id)
+    
+    list_of_projects = Project.objects.all().order_by('project_creation_date')
+    
+    if request.POST:
+      iterationname = request.POST['iterationname']
+      phasename = request.POST['phasename']
+      the_phase = Phase.objects.filter(project=the_project).get(phase_name=phasename)
+
+      the_iteration = Iteration(project=the_project,phase=the_phase,iteration_name=iterationname,iteration_start_date=timezone.now(),iteration_status='PND',iteration_estimate_SLOC=0,iteration_SLOC=0,iteration_estimate_effort=0,iteration_effort=0,iteration_defect_injected=0,iteration_defect_removed=0)
+
+      the_iteration.save()
+
+      return HttpResponseRedirect('/ise_pdt/manager/'+the_user.username+'/'+project_id+'/')
+    
+    context = {'username': username,'the_project': the_project, 'list_of_projects': list_of_projects}
+    
+    if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
+      return render(request, 'ise_pdt/create_iteration_m.html', context)
+    else:
+      return HttpResponseRedirect('/ise_pdt/logout')
+  
+def edit_iteration_m(request, username, project_id, iteration_id):
+    the_iteration = Iteration.objects.get(id=iteration_id)
+    
+    if request.POST:
+      iterationname = request.POST['iterationname']
+      iterationstatus = request.POST['iterationstatus']
+      
+      the_iteration.iteration_name = iterationname
+      the_iteration.iteration_status = iterationstatus
+      
+      the_iteration.save()
+    
+    if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
+      return HttpResponseRedirect('/ise_pdt/manager/'+username+'/'+project_id+'/'+iteration_id+'/')
+  
+  
+def delete_iteration_m(request, username, project_id, iteration_id):
+    the_iteration = Iteration.objects.get(id=iteration_id)
+    
+    Iteration.objects.get(id=iteration_id).delete()
+    TimeLog.objects.filter(iteration=the_iteration.iteration_name).delete()
+    
+    return HttpResponseRedirect('/ise_pdt/manager/'+username+'/'+project_id+'/')
+  

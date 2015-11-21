@@ -15,24 +15,24 @@
 
   <!-- CSS FILE LINKS -->
 
-    <!-- - - -Vendors- - - -->
+  <!-- - - -Vendors- - - -->
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/reset.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/bootstrap-custom.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/vendors/css/ionicons.min.css' %}">
 
 
-    <!-- - - -Resources- - - -->
+  <!-- - - -Resources- - - -->
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style-m.css' %}">
 
-    <!-- - - - -Font- - - - -->
+  <!-- - - - -Font- - - - -->
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600' rel='stylesheet' type='text/css'>
 
 
   <title>ISE Project</title>
 </head>
-{% for user in the_user %}
-{% for project in the_project %}
+
+
 <body>
   <div class="app-interface">
     <div class="top-bar">
@@ -40,7 +40,7 @@
         Company Name
       </div>
       <div class="user-name">
-        Welcome, {{user.username}}. 
+        Welcome, {{the_user.username}}.
         <a href="/ise_pdt/logout">Logout</a>.
       </div>
     </div>
@@ -54,7 +54,7 @@
               <div class="click-to-collapse">
                 <i class="ion-ios-arrow-right"></i>
               </div>
-              <a href="/ise_pdt/manager/{{user.username}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
+              <a href="/ise_pdt/manager/{{the_user.username}}/{{the_project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
             </div>
             <div class="project-nav-div">
               <h3 class="project-nav">Iteration</h3>
@@ -69,82 +69,118 @@
       </div>
       <div class="right-section col-xs-10">
         <div class="right-heading-bar col-xs-12">
-          <a href="/ise_pdt/manager/{{user.username}}/{{project.id}}">
+          <a href="/ise_pdt/manager/{{the_user.username}}/{{the_project.id}}/">
             <div class="heading-bar-back-button">
               <i class="ion-chevron-left"></i>
               <p>Iteration Manager</p>
             </div>
           </a>
           <div class="heading-bar-project-title">
-            {{project.project_name}}
+            {{the_project.project_name}} > Iteration {{the_iteration.iteration_name}}
           </div>
           <div class="heading-bar-project-time">
-            Total Time: {{project.project_total_time}}
+            Total Time: {{the_project.project_total_time}}
           </div>
         </div>
         <div class="right-tabs col-xs-12">
-          <div class="project-tab col-xs-12 current" data-tab="summary">
+          <div class="project-tab col-xs-6 current" data-tab="summary">
             <div class="tab-text">
               <p>Summary</p>
             </div>
           </div>
+          <div class="project-tab col-xs-6" data-tab="edit">
+            <div class="tab-text">
+              <p>Edit Iteration</p>
+            </div>
+          </div>
         </div>
         <div class="tabbed-div current" id="summary">
-			<table id="project_summary_table">
-				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
-				<tr>
-					<td class="project_summary_left_col">Date started: </td><td class="project_summary_right_col">xxxxx</td>
-				</tr> 
-				<tr>
-					<td class="project_summary_left_col">Active Iteration: </td><td class="project_summary_right_col">xxxxx</td>
-				</tr> 
-				<tr>
-					<td class="project_summary_left_col">Current Phase: </td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
-				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Size-based Metric</td><td class="project_summary_right_col"></td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Estimated Delivered line of code:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Delivered line of code:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Time-effort:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Estimated Time-effort:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Productivity:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
-				<tr><td class="project_summary_left_col">&nbsp;</td><td class="project_summary_right_col">&nbsp;</td></tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Quality Metric</td><td class="project_summary_right_col"></td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Total number of defect injected:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Total number of defect removed:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Defect Injection rete:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Defect Removal rate:</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border col_with_grey_backgroud">
-					<td class="project_summary_left_col">Defect density</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-				<tr class="col_with_border">
-					<td class="project_summary_left_col">Yield</td><td class="project_summary_right_col">xxxxx</td>
-				</tr>
-			</table>
+          <div class="col-xs-1"></div>
+          <div class="col-xs-5">
+            <table class="user-time-summary-table summary phase">
+                <tr>
+                  <th colspan="2">Time Based</th>
+                </tr>
+                <tr class="data-row">
+                  <td class="data-right-border">Estimate Delivered Lines of Code</td>
+                  <td>123 lines</td>
+                </tr>
+                <tr class="data-row">
+                  <td class="data-right-border">Delivered Lines of Code</td>
+                  <td>123 lines</td>
+                </tr>
+                <tr class="data-row">
+                  <td class="data-right-border">Time Effort</td>
+                  <td>15 person-month</td>
+                </tr>
+                <tr class="data-row">
+                  <td class="data-right-border">Estimated Time Effort</td>
+                  <td>50 person-month</td>
+                </tr>
+                <tr class="data-row no-bottom-border">
+                  <td class="data-right-border">Productivity</td>
+                  <td>200 DLOC/person-month</td>
+                </tr>
+              </table>
+          </div>
+          <div class="col-xs-5">
+            <table class="user-time-summary-table summary phase">
+                <tr>
+                  <th colspan="2">Size Based</th>
+                </tr>
+                <tr class="data-row">
+                  <td class="data-right-border">Total Number of Defects Injected</td>
+                  <td>123 lines</td>
+                </tr>
+                <tr class="data-row">
+                  <td class="data-right-border">Total Number of Defects Removed</td>
+                  <td>123 lines</td>
+                </tr>
+                <tr class="data-row">
+                  <td class="data-right-border">Defect Injection Rate</td>
+                  <td>15 person-month</td>
+                </tr>
+                <tr class="data-row">
+                  <td class="data-right-border">Defect Removal Rate</td>
+                  <td>50 person-month</td>
+                </tr>
+                <tr class="data-row no-bottom-border">
+                  <td class="data-right-border">Defect Density</td>
+                  <td>200 DLOC/person-month</td>
+                </tr>
+              </table>
+          </div>
+          <div class="col-xs-1"></div>
+        </div>
+        <div class="tabbed-div" id="edit">
+          <form class="create_elem_form project-edit" name="CreateElemForm" action="/ise_pdt/manager/{{the_user.username}}/{{the_project.id}}/{{the_iteration.id}}/edititeration/" method="post">
+            {% csrf_token %} {% if next %}
+            <input type="hidden" name="next" value="{{ next }}" /> {% endif %}
+
+            <div class="controls">
+              <label>Iteration Name: </label>
+              <input type="text" id="iterationname" name="iterationname" placeholder="Iteration Name" autocomplete="off" value="{{the_iteration.iteration_name}}">
+            </div>
+            <div class="controls">
+              <label>Iteration Status:</label>
+              <select name="iterationstatus" id="iterationstatus">
+                <option {% if the_iteration.iteration_status == 'ACT' %} selected="selected" {% endif %} value="ACT">Active</option>
+                <option {% if the_iteration.iteration_status == 'CLS' %} selected="selected" {% endif %} value="CLS">Closed</option>
+                <option {% if the_iteration.iteration_status == 'PND' %} selected="selected" {% endif %} value="PND">Pending</option>
+              </select>
+            </div>
+
+           <input type="hidden" id="userjs_i" name="userjs_i" value="{{ the_user.username }}">
+           <input type="hidden" id="projectjs_i" name="projectjs_i" value="{{ the_project.id }}">
+           <input type="hidden" id="iterationjs" name="iterationjs" value="{{ the_iteration.id }}">
+           
+            <div class="controls">
+              <button type="submit" class="btn btn-green">Save</button>
+              <div class="delete-button btn" onclick="delete_iteration_prompt()">Delete Iteration</div>
+            </div>
+
+
+          </form>
         </div>
       </div>
     </div>
@@ -157,6 +193,5 @@
   <script src="{% static 'ise_pdt/vendors/js/jquery-2.1.4.min.js' %}"></script>
   <script src="{% static 'ise_pdt/resources/js/main-script.js' %}"></script>
 </body>
-{% endfor %}
-{% endfor %}
+
 </html>

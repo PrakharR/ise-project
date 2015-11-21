@@ -15,14 +15,18 @@ html {
 }
 
 .clearfix {
-  zoom: 1; /* ie 6/7 */
+  zoom: 1;
+  /* ie 6/7 */
 }
 
 body {
   background: #3B3B3B;
 }
 
-a, a:visited, a:hover, a:active {
+a,
+a:visited,
+a:hover,
+a:active {
   color: inherit;
 }
 
@@ -33,7 +37,9 @@ a, a:visited, a:hover, a:active {
   padding: 30px 100px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   text-align: center;
 }
 
@@ -43,22 +49,15 @@ a, a:visited, a:hover, a:active {
   font-weight: 800;
 }
 
-.control-label {
-  font-size: 140%;
-  margin-bottom: 20px;
-}
-
-.controls {
-  margin-top: 10px;
-}
 .controls input {
   font-size: 100%;
   color: #fff;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   background: #3B3B3B;
   border: none;
   padding: 10px 50px;
   border-bottom: solid 2px #C97B7B;
+  -webkit-transition: border 0.3s;
   transition: border 0.3s;
   text-align: center;
 }
@@ -77,6 +76,7 @@ button {
   font-size: 140%;
   cursor: pointer;
   outline: none;
+  margin-top: 10px;
 }
 
 button:hover {

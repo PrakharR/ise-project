@@ -15,7 +15,8 @@ html {
 }
 
 .clearfix {
-  zoom: 1; /* ie 6/7 */
+  zoom: 1;
+  /* ie 6/7 */
 }
 
 .app-interface {
@@ -23,12 +24,20 @@ html {
   width: 100vw;
 }
 
-a, a:visited, a:hover, a:active {
+a,
+a:visited,
+a:hover,
+a:active {
   color: inherit;
 }
 
+
 /* ---------------------------*/
+
+
 /* Top Section Of The Page */
+
+
 /* ---------------------------*/
 
 .top-bar {
@@ -54,7 +63,11 @@ a, a:visited, a:hover, a:active {
 
 
 /* ---------------------------*/
+
+
 /* Bottom Section Of The Page */
+
+
 /* ---------------------------*/
 
 .bottom-bar {
@@ -65,7 +78,11 @@ a, a:visited, a:hover, a:active {
 
 
 /* ---------------------------*/
+
+
 /* Middle Section Of The Page */
+
+
 /* ---------------------------*/
 
 .middle-bar {
@@ -80,9 +97,12 @@ a, a:visited, a:hover, a:active {
   height: 100%;
   display: inline-block;
   background-color: #3B3B3B;
-  -webkit-user-select: none;  /* Chrome all / Safari all */
-  -moz-user-select: none;     /* Firefox all */
-  -ms-user-select: none;      /* IE 10+ */
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
   user-select: none;
 }
 
@@ -152,9 +172,7 @@ a, a:visited, a:hover, a:active {
   border: 4px solid #3B3B3B;
   margin-top: 20px;
   margin-bottom: 20px;
-  -webkit-box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.6);
-  -moz-box-shadow:    0px 5px 15px 0px rgba(50, 50, 50, 0.6);
-  box-shadow:         0px 5px 15px 0px rgba(50, 50, 50, 0.6);
+  box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.6);
   text-align: center;
   color: #fff;
   background: #4F4F4F;
@@ -169,15 +187,15 @@ a, a:visited, a:hover, a:active {
   position: absolute;
   top: 57%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   line-height: 1.2;
 }
 
 .project-box p {
-  
   margin-bottom: 10px;
   text-decoration: none;
-  
 }
 
 .box-content-title {
@@ -185,8 +203,6 @@ a, a:visited, a:hover, a:active {
   background: #C97B7B;
   padding: 5px;
 }
-
-
 
 
 /* project.html #CD5C5C */
@@ -203,6 +219,8 @@ a, a:visited, a:hover, a:active {
   position: absolute;
   top: 50%;
   left: 1%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 
@@ -218,6 +236,8 @@ a, a:visited, a:hover, a:active {
   position: absolute;
   top: 50%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
@@ -227,6 +247,8 @@ a, a:visited, a:hover, a:active {
   position: absolute;
   top: 50%;
   right: 40px;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 
@@ -238,6 +260,7 @@ a, a:visited, a:hover, a:active {
   height: 35px;
   background-color: #4F4F4F;
   text-align: center;
+  -webkit-transition: background-color 0.3s;
   transition: background-color 0.3s;
   cursor: pointer;
 }
@@ -264,7 +287,9 @@ a, a:visited, a:hover, a:active {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .tabbed-div {
@@ -280,8 +305,10 @@ a, a:visited, a:hover, a:active {
   position: absolute;
   top: 53%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  text-align:center;
+  text-align: center;
   font-size: 140%;
   padding: 40px;
   width: 50%;
@@ -328,8 +355,10 @@ a, a:visited, a:hover, a:active {
   position: absolute;
   top: 53%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  text-align:center;
+  text-align: center;
   font-size: 140%;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -351,6 +380,7 @@ a, a:visited, a:hover, a:active {
   cursor: pointer;
   outline: none;
   margin-top: 20px;
+  -webkit-transition: background 0.3s;
   transition: background 0.3s;
 }
 
@@ -368,6 +398,6 @@ a, a:visited, a:hover, a:active {
   text-decoration: none;
 }
 
-.time_record{
-	font-size: 450%;
+.time_record {
+  font-size: 450%;
 }

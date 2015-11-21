@@ -24,7 +24,6 @@
   <!-- - - -Resources- - - -->
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'ise_pdt/resources/css/main-style-m.css' %}">
-
   <!-- - - - -Font- - - - -->
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600' rel='stylesheet' type='text/css'>
 
@@ -53,12 +52,11 @@
               <div class="click-to-collapse">
                 <i class="ion-ios-arrow-right"></i>
               </div>
-              <a href="/ise_pdt/developer/{{username}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
+              <a href="/ise_pdt/manager/{{username}}/{{project.id}}"><h2 class="project-name">{{project.project_name}}</h2></a>
             </div>
             <div class="project-nav-div">
-              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}?task=dev"><h3 class="project-nav change_page">Development</h3></a>
-              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}?task=def"><h3 class="project-nav change_page">Defect Removal</h3></a>
-              <a href="/ise_pdt/developer/{{user.username}}/{{project.id}}?task=man"><h3 class="project-nav change_page">Management</h3></a>
+              <h3 class="project-nav">Iterations</h3>
+              <h3 class="project-nav">Summary</h3>
             </div>
           </div>
           {% endfor %}
@@ -68,24 +66,44 @@
         {% endif %}
       </div>
       <div class="right-section col-xs-10">
-        {% if list_of_projects %}
-        <div class="project-boxes">
-          {% for project in list_of_projects %}
-          <div class="col-xs-6">
-            <a href="/ise_pdt/developer/{{username}}/{{project.id}}">
-              <div class="project-box">
-                <div class="box-content">
-                  <p class="box-content-title">{{project.project_name}}</p>
-                  <p>{{project.project_description}}</p>
-                </div>
-              </div>
-            </a>
+        
+        <div class="right-heading-bar col-xs-12">
+          <a href="/ise_pdt/manager/{{username}}/{{the_project.id}}/">
+            <div class="heading-bar-back-button">
+              <i class="ion-chevron-left"></i>
+              <p>Iteration Manager</p>
+            </div>
+          </a>
+          <div class="heading-bar-project-title">
+            {{the_project.project_name}}
           </div>
-          {% endfor %}
-        </div>
-        {% else %}
-        <p>No projects are available.</p>
-        {% endif %}
+        </div>      
+        <p class="iteration-creation-title">Create Iteration</p>
+        <form class="create_elem_form iteration" name="CreateElemForm" action="/ise_pdt/manager/{{username}}/{{the_project.id}}/createiteration/" method="post">
+          {% csrf_token %} {% if next %}
+          <input type="hidden" name="next" value="{{ next }}" /> {% endif %}
+          
+          <div class="controls">
+            <label></label>
+            <input type="text" id="iterationname" name="iterationname" placeholder="Iteration Name" autocomplete="off">
+          </div>
+          
+          <div class="controls">
+            <label>Select Phase:</label>
+            <select name="phasename" id="phasename">
+              <option value="INCP">Inception</option>
+              <option value="ELAB">Elaboration</option>
+              <option value="CONS">Construction</option>
+              <option value="TRAN">Transition</option>
+            </select>
+          </div>
+           
+          <div class="controls">
+            <button type="submit" class="btn">Create</button>
+          </div>
+          
+        </form>
+        
       </div>
     </div>
     <div class="bottom-bar">

@@ -27,12 +27,24 @@ $(document).ready(function(){
 	localStorage.setItem("overall_total_project_time", x);
 	// store the current task working on 
 	// to record whether the most recent time record has been added to total time, in order to avoid double calculation when switching tab
+  
+    
 	
 	$('.project-tab').click(function(){
 		var tab_id = $(this).attr('data-tab');
 
 		$('.project-tab').removeClass('current');
 		$('.tabbed-div').removeClass('current');
+
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	})
+    
+    $('.project-summary-tab').click(function(){
+		var tab_id = $(this).attr('data-tab');
+
+		$('.project-summary-tab').removeClass('current');
+		$('.tabbed-summary-div').removeClass('current');
 
 		$(this).addClass('current');
 		$("#"+tab_id).addClass('current');
@@ -262,3 +274,32 @@ $('.click-to-collapse').on('click', function(e) {
     $('.click-to-collapse i').eq(hello).addClass('ion-ios-arrow-right');
   }
 });
+
+function delete_project_prompt() {
+  
+  var user = document.getElementById("userjs").value;
+  var project = document.getElementById("projectjs").value;
+  
+  if(confirm("Are you sure you want to delete this project?")) {
+    window.location="/ise_pdt/manager/"+user+"/"+project+"/deleteproject/";
+  } else {
+      // do something
+  }
+  
+}
+
+function delete_iteration_prompt() {
+  
+  var user = document.getElementById("userjs_i").value;
+  var project = document.getElementById("projectjs_i").value;
+  var iteration = document.getElementById("iterationjs").value;
+  
+  if(confirm("Are you sure you want to delete this iteration?")) {
+    window.location="/ise_pdt/manager/"+user+"/"+project+"/"+iteration+"/deleteiteration/";
+  } else {
+      // do something
+  }
+  
+}
+
+
