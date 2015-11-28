@@ -116,6 +116,10 @@ def project(request, username, project_id):
     list_of_def_logs = TimeLog.objects.filter(project = the_project).filter(user=the_user).filter(work_type='DEF')
     list_of_man_logs = TimeLog.objects.filter(project = the_project).filter(user=the_user).filter(work_type='MAN')
     
+    #added by keisei 26-11-2015
+    list_of_iterations = Iteration.objects.filter(project=the_project).order_by('phase', 'iteration_start_date') 
+    #added by keisei 26-11-2015
+    list_of_defects = Defect.objects.filter(iteration_of_injection__in = list_of_iterations);
     
     #Adding total user's seconds for project
     for projectlog in list_of_project_logs:
@@ -210,7 +214,7 @@ def project(request, username, project_id):
     if total_man_time_hours < 10:
       total_man_time_hours = '0'+str(total_man_time_hours)
     
-    context = {'list_of_projects': list_of_projects, 'the_project': the_project, 'the_user': the_user, 'total_dev_time_seconds': total_dev_time_seconds, 'total_dev_time_minutes': total_dev_time_minutes, 'total_dev_time_hours': total_dev_time_hours, 'total_def_time_seconds': total_def_time_seconds, 'total_def_time_minutes': total_def_time_minutes, 'total_def_time_hours': total_def_time_hours, 'total_man_time_seconds': total_man_time_seconds, 'total_man_time_minutes': total_man_time_minutes, 'total_man_time_hours': total_man_time_hours, 'total_project_time_seconds': total_project_time_seconds, 'total_project_time_minutes': total_project_time_minutes, 'total_project_time_hours': total_project_time_hours, 'overall_total_project_time_seconds': overall_total_project_time_seconds, 'overall_total_project_time_minutes': overall_total_project_time_minutes, 'overall_total_project_time_hours': overall_total_project_time_hours}
+    context = {'list_of_projects': list_of_projects, 'list_of_iterations': list_of_iterations, 'list_of_defects': list_of_defects, 'the_project': the_project, 'the_user': the_user, 'total_dev_time_seconds': total_dev_time_seconds, 'total_dev_time_minutes': total_dev_time_minutes, 'total_dev_time_hours': total_dev_time_hours, 'total_def_time_seconds': total_def_time_seconds, 'total_def_time_minutes': total_def_time_minutes, 'total_def_time_hours': total_def_time_hours, 'total_man_time_seconds': total_man_time_seconds, 'total_man_time_minutes': total_man_time_minutes, 'total_man_time_hours': total_man_time_hours, 'total_project_time_seconds': total_project_time_seconds, 'total_project_time_minutes': total_project_time_minutes, 'total_project_time_hours': total_project_time_hours, 'overall_total_project_time_seconds': overall_total_project_time_seconds, 'overall_total_project_time_minutes': overall_total_project_time_minutes, 'overall_total_project_time_hours': overall_total_project_time_hours}
     if request.user.is_authenticated() and request.user.groups.filter(name='Developer').exists():
       return render(request, 'ise_pdt/project.html', context)
     else:
@@ -225,10 +229,21 @@ def project_m(request, username, project_id):
     the_project = Project.objects.get(id = project_id)
     the_user = User.objects.get(username = username)
     overall_total_project_time_seconds = the_project.project_total_time
+    the_phase_incp = Phase.objects.filter(project=the_project).get(phase_name='INCP')
+    the_phase_elab = Phase.objects.filter(project=the_project).get(phase_name='ELAB')
+    the_phase_cons = Phase.objects.filter(project=the_project).get(phase_name='CONS')
+    the_phase_tran = Phase.objects.filter(project=the_project).get(phase_name='TRAN')
+    
     
     list_of_projects = Project.objects.all().order_by('project_creation_date')
     
     list_of_iterations = Iteration.objects.filter(project=the_project).order_by('phase', 'iteration_start_date')
+    list_of_iterations_incp = Iteration.objects.filter(project=the_project).filter(phase = the_phase_incp)
+    list_of_iterations_elab = Iteration.objects.filter(project=the_project).filter(phase = the_phase_elab)
+    list_of_iterations_cons = Iteration.objects.filter(project=the_project).filter(phase = the_phase_cons)
+    list_of_iterations_tran = Iteration.objects.filter(project=the_project).filter(phase = the_phase_tran)
+    
+    
     
     #Getting overall Seconds, Minutes and Hours for project
     overall_total_project_time_hours = int(overall_total_project_time_seconds/3600)
@@ -244,14 +259,296 @@ def project_m(request, username, project_id):
       
     if overall_total_project_time_hours < 10:
       overall_total_project_time_hours = '0'+str(overall_total_project_time_hours)
+      
+    project_ESLOC = 0
+    incp_ESLOC = elab_ESLOC = cons_ESLOC = tran_ESLOC = 0
     
-    context = {'list_of_projects': list_of_projects, 'list_of_iterations': list_of_iterations, 'the_project': the_project, 'the_user': the_user, 'overall_total_project_time_seconds': overall_total_project_time_seconds, 'overall_total_project_time_minutes': overall_total_project_time_minutes, 'overall_total_project_time_hours': overall_total_project_time_hours}
+    project_SLOC = 0
+    incp_SLOC = elab_SLOC = cons_SLOC = tran_SLOC = 0
+    
+    project_ETE = 0
+    incp_ETE = elab_ETE = cons_ETE = tran_ETE = 0
+      
+    #METRICS
+    #Time Based
+    # 1) Estimated Delivered Lines of Code
+    #Project
+    for projectiteration in list_of_iterations:
+      project_ESLOC += projectiteration.iteration_estimate_SLOC
+    
+    #Phase - Inception
+    for projectiteration in list_of_iterations_incp:
+      incp_ESLOC += projectiteration.iteration_estimate_SLOC
+    
+    #Phase - Elaboration
+    for projectiteration in list_of_iterations_elab:
+      elab_ESLOC += projectiteration.iteration_estimate_SLOC
+    #Phase - Construction
+    for projectiteration in list_of_iterations_cons:
+      cons_ESLOC += projectiteration.iteration_estimate_SLOC
+    #Phase - Transition
+    for projectiteration in list_of_iterations_tran:
+      tran_ESLOC += projectiteration.iteration_estimate_SLOC
+    
+    # 2) Delivered Lines of Code
+    #Project
+    for projectiteration in list_of_iterations:
+      project_SLOC += projectiteration.iteration_SLOC
+    
+    project_SLOC_percentage=(1.0*project_SLOC/project_ESLOC)*100
+    #Phase - Inception
+    for projectiteration in list_of_iterations_incp:
+      incp_SLOC += projectiteration.iteration_SLOC
+    
+    incp_SLOC_percentage=(1.0*incp_SLOC/incp_ESLOC)*100
+    
+    #Phase - Elaboration
+    for projectiteration in list_of_iterations_elab:
+      elab_SLOC += projectiteration.iteration_SLOC
+    
+    elab_SLOC_percentage=(1.0*elab_SLOC/elab_ESLOC)*100
+    
+    #Phase - Construction
+    for projectiteration in list_of_iterations_cons:
+      cons_SLOC += projectiteration.iteration_SLOC
+    
+    cons_SLOC_percentage=(1.0*cons_SLOC/cons_ESLOC)*100
+    
+    #Phase - Transition
+    for projectiteration in list_of_iterations_tran:
+      tran_SLOC += projectiteration.iteration_SLOC
+    
+    tran_SLOC_percentage=(1.0*tran_SLOC/tran_ESLOC)*100
+    
+    # 3) Estimated Time Effort
+    #Project
+    for projectiteration in list_of_iterations:
+      project_ETE += projectiteration.iteration_estimate_effort
+    
+    #Phase - Inception
+    for projectiteration in list_of_iterations_incp:
+      incp_ETE += projectiteration.iteration_estimate_effort
+    
+    #Phase - Elaboration
+    for projectiteration in list_of_iterations_elab:
+      elab_ETE += projectiteration.iteration_estimate_effort
+    
+    
+    #Phase - Construction
+    for projectiteration in list_of_iterations_cons:
+      cons_ETE += projectiteration.iteration_estimate_effort
+    
+    
+    #Phase - Transition
+    for projectiteration in list_of_iterations_tran:
+      tran_ETE += projectiteration.iteration_estimate_effort
+    
+    
+    # 4) Time Effort
+    #Project
+    project_TE = ((the_project.project_total_time+1)/2592000)
+    project_TE_percentage = (1.0*project_TE/project_ETE) * 100
+    #Phase - Inception
+    incp_TE = 1
+    list_time_incp = TimeLog.objects.filter(project= the_project).filter(phase='INCP')
+    
+    for log in list_time_incp:
+      incp_TE += log.time_worked.seconds
+    
+    incp_TE = (incp_TE/2592000)
+    incp_TE_percentage = (1.0*incp_TE*incp_ETE)*100
+    
+    #Phase - Elaboration
+    elab_TE = 1
+    list_time_elab = TimeLog.objects.filter(project= the_project).filter(phase='ELAB')
+    
+    for log in list_time_elab:
+      elab_TE += log.time_worked.seconds
+    
+    elab_TE = (elab_TE/2592000)
+    elab_TE_percentage = (1.0*elab_TE*elab_ETE)*100
+    
+    #Phase - Construction
+    cons_TE = 1
+    list_time_cons = TimeLog.objects.filter(project= the_project).filter(phase='CONS')
+    
+    for log in list_time_cons:
+      cons_TE += log.time_worked.seconds
+    
+    cons_TE = (cons_TE/2592000)
+    cons_TE_percentage = (1.0*cons_TE*cons_ETE)*100
+    
+    #Phase - Transition
+    tran_TE = 1
+    list_time_tran = TimeLog.objects.filter(project= the_project).filter(phase='TRAN')
+    
+    for log in list_time_tran:
+      tran_TE += log.time_worked.seconds
+    
+    tran_TE = (tran_TE/2592000)
+    tran_TE_percentage = (1.0*tran_TE*tran_ETE)*100
+    
+    # 5) Productivity
+    #Project
+    project_productivity = project_SLOC/(project_TE+1)
+    
+    #Phase - Inception
+    incp_productivity = incp_SLOC/(incp_TE+1)
+    
+    #Phase - Elaboration
+    elab_productivity = elab_SLOC/(elab_TE+1)
+    
+    #Phase - Construction
+    cons_productivity = cons_SLOC/(cons_TE+1)
+    
+    #Phase - Transition
+    tran_productivity = tran_SLOC/(tran_TE+1)
+    
+    #Size Based
+    # 1) Number of Defects Injected
+    #Project
+    project_DI = Defect.objects.filter(iteration_of_injection__in = list_of_iterations).count();
+    
+    #Phase - Inception
+    incp_DI = Defect.objects.filter(iteration_of_injection__in = list_of_iterations_incp).count();
+    
+    #Phase - Elaboration
+    elab_DI = Defect.objects.filter(iteration_of_injection__in = list_of_iterations_elab).count();
+    
+    #Phase - Construction
+    cons_DI = Defect.objects.filter(iteration_of_injection__in = list_of_iterations_cons).count();
+    
+    #Phase - Transition
+    tran_DI = Defect.objects.filter(iteration_of_injection__in = list_of_iterations_tran).count();
+    
+    # 2) Number of Defects Removed 
+    #Project
+    project_DR = project_DI
+    
+    #Phase - Inception
+    incp_DR = incp_DI
+    
+    #Phase - Elaboration
+    elab_DR = elab_DI
+    
+    #Phase - Construction
+    cons_DR = cons_DI
+    
+    #Phase - Transition
+    tran_DR = tran_DI
+    
+    # 3) Defect Injection Rate
+    #Project
+    project_DIR = project_DI/((project_TE+1)*720)
+    
+    #Phase - Inception
+    incp_DIR = incp_DI/((incp_TE+1)*720)
+    
+    #Phase - Elaboration
+    elab_DIR = elab_DI/((elab_TE+1)*720)
+    
+    #Phase - Construction
+    cons_DIR = cons_DI/((cons_TE+1)*720)
+    
+    #Phase - Transition
+    tran_DIR = tran_DI/((tran_TE+1)*720)
+    
+    # 4) Defect Removal Rate
+    #Project
+    project_DRR = project_DI/((int(overall_total_project_time_hours)+1)*720)
+    
+    #Phase - Inception
+    incp_DRR = incp_DI/((incp_TE+1)*720)
+    
+    #Phase - Elaboration
+    elab_DRR = elab_DI/((elab_TE+1)*720)
+    
+    #Phase - Construction
+    cons_DRR = cons_DI/((cons_TE+1)*720)
+    
+    #Phase - Transition
+    tran_DRR = project_DI/((tran_TE+1)*720)
+    
+    # 5) Defect Density
+    #Project
+    project_DD = project_DI/(project_SLOC*1000)
+    
+    #Phase - Inception
+    incp_DD = incp_DI/(incp_SLOC*1000)
+    
+    #Phase - Elaboration
+    elab_DD = elab_DI/(elab_SLOC*1000)
+    
+    #Phase - Construction
+    cons_DD = cons_DI/(cons_SLOC*1000)
+    
+    #Phase - Transition
+    tran_DD = tran_DI/(tran_SLOC*1000)
+    
+    context = {'list_of_projects': list_of_projects, 'list_of_iterations': list_of_iterations, 'the_project': the_project, 'the_user': the_user, 'overall_total_project_time_seconds': overall_total_project_time_seconds, 'overall_total_project_time_minutes': overall_total_project_time_minutes, 'overall_total_project_time_hours': overall_total_project_time_hours,
+              'project_DD':project_DD,'incp_DD':incp_DD,'elab_DD':elab_DD,'cons_DD':cons_DD, 'tran_DD': tran_DD,'project_DIR':project_DIR,'incp_DIR':incp_DIR,'elab_DIR':elab_DIR,'cons_DIR':cons_DIR, 'tran_DIR': tran_DIR,'project_DRR':project_DRR,'incp_DRR':incp_DRR,'elab_DRR':elab_DRR,'cons_DRR':cons_DRR, 'tran_DRR': tran_DRR,'project_DR':project_DR,'incp_DR':incp_DR,'elab_DR':elab_DR,'cons_DR':cons_DR, 'tran_DR': tran_DR,'project_DI':project_DI,'incp_DI':incp_DI,'elab_DI':elab_DI,'cons_DI':cons_DI, 'tran_DI': tran_DI,'project_productivity':project_productivity,'incp_productivity':incp_productivity,'elab_productivity':elab_productivity,'cons_productivity':cons_productivity, 'tran_productivity': tran_productivity,'project_ETE':project_ETE,'incp_ETE':incp_ETE,'elab_ETE':elab_ETE,'cons_ETE':cons_ETE, 'tran_ETE': tran_ETE,'project_TE_percentage':project_TE_percentage,'incp_TE_percentage':incp_TE_percentage,'elab_TE_percentage':elab_TE_percentage,'cons_TE_percentage':cons_TE_percentage, 'tran_TE_percentage': tran_TE_percentage,'project_ESLOC':project_ESLOC,'incp_ESLOC':incp_ESLOC,'elab_ESLOC':elab_ESLOC,'cons_ESLOC':cons_ESLOC, 'tran_ESLOC': tran_ESLOC,'project_SLOC_percentage':project_SLOC_percentage,'incp_SLOC_percentage':incp_SLOC_percentage,'elab_SLOC_percentage':elab_SLOC_percentage,'cons_SLOC_percentage':cons_SLOC_percentage, 'tran_SLOC_percentage': tran_SLOC_percentage}
     
     if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
       return render(request, 'ise_pdt/project_m.html', context)
     else:
       return HttpResponseRedirect('/ise_pdt/logout')
 
+
+def next_iteration_m(request, username, project_id):
+    the_project = Project.objects.get(id = project_id)
+    the_phase = Phase.objects.filter(project = the_project).get(phase_status = 'ACT')
+    current_active_iteration = Iteration.objects.filter(project=the_project).get(iteration_status='ACT')
+    next_active_iteration = current_active_iteration
+    list_of_projects = Project.objects.all().order_by('project_creation_date')
+    list_of_iterations = Iteration.objects.filter(project=the_project).order_by('phase', 'iteration_start_date')
+    
+    if request.POST:
+      iterationsloc = request.POST['p_iterationSLOC']
+      iterationte = request.POST['p_iterationTE']
+
+      for index, item in enumerate(list_of_iterations):
+        if item.id == current_active_iteration.id:
+          the_index = index
+          break
+
+      for index2, item2 in enumerate(list_of_iterations):
+        if index2 == (the_index + 1):
+          next_active_iteration = item2
+          break
+
+      if current_active_iteration == next_active_iteration:
+        
+        return HttpResponseRedirect('/ise_pdt/manager/'+username+'/'+project_id+'/')
+      
+      else:
+        current_active_iteration.iteration_status = 'CLS'
+        current_active_iteration.iteration_SLOC = iterationsloc
+        current_active_iteration.iteration_effort = iterationte
+        
+        next_active_iteration.iteration_status = 'ACT'
+        
+        phase_to_activate = next_active_iteration.phase
+
+        the_phase.phase_status = 'CLS'
+        the_phase.save()
+
+        phase_to_activate.phase_status = 'ACT'
+        phase_to_activate.save()
+
+        current_active_iteration.save()
+        next_active_iteration.save()
+    
+        return HttpResponseRedirect('/ise_pdt/manager/'+username+'/'+project_id+'/')
+    
+    context = {'username': username,'the_project': the_project, 'list_of_projects': list_of_projects}
+    
+    if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
+      return render(request, 'ise_pdt/next_iteration_m.html', context)
+    else:
+      return HttpResponseRedirect('/ise_pdt/logout')
+    
+    
+    
     
 def iteration_m(request, username, project_id, iteration_id):
     the_project = Project.objects.get(id = project_id)
@@ -281,7 +578,7 @@ def create_project_m(request, username):
       the_project.save()
       
       #Create 4 Phases
-      phase_incp = Phase(project=the_project,phase_name='INCP',phase_start_date=timezone.now(),phase_status='PND')
+      phase_incp = Phase(project=the_project,phase_name='INCP',phase_start_date=timezone.now(),phase_status='ACT')
       phase_elab = Phase(project=the_project,phase_name='ELAB',phase_start_date=timezone.now(),phase_status='PND')
       phase_cons = Phase(project=the_project,phase_name='CONS',phase_start_date=timezone.now(),phase_status='PND')
       phase_tran = Phase(project=the_project,phase_name='TRAN',phase_start_date=timezone.now(),phase_status='PND')
@@ -291,9 +588,15 @@ def create_project_m(request, username):
       phase_tran.save()
       
       #Create Dummy Iteration
-      the_iteration = Iteration(project=the_project,phase=phase_incp,iteration_name='Sample',iteration_start_date=timezone.now(),iteration_status='ACT',iteration_estimate_SLOC=0,iteration_SLOC=0,iteration_estimate_effort=0,iteration_effort=0,iteration_defect_injected=0,iteration_defect_removed=0)
+      the_iteration = Iteration(project=the_project,phase=phase_incp,iteration_name='INCP1',iteration_start_date=timezone.now(),iteration_status='ACT',iteration_estimate_SLOC=1000,iteration_SLOC=100,iteration_estimate_effort=1,iteration_effort=0,iteration_defect_injected=0,iteration_defect_removed=0)
+      the_iteration_elab = Iteration(project=the_project,phase=phase_elab,iteration_name='ELAB1',iteration_start_date=timezone.now(),iteration_status='PND',iteration_estimate_SLOC=1000,iteration_SLOC=100,iteration_estimate_effort=1,iteration_effort=0,iteration_defect_injected=0,iteration_defect_removed=0)
+      the_iteration_cons = Iteration(project=the_project,phase=phase_cons,iteration_name='CONS1',iteration_start_date=timezone.now(),iteration_status='PND',iteration_estimate_SLOC=1000,iteration_SLOC=100,iteration_estimate_effort=1,iteration_effort=0,iteration_defect_injected=0,iteration_defect_removed=0)
+      the_iteration_tran = Iteration(project=the_project,phase=phase_tran,iteration_name='TRAN1',iteration_start_date=timezone.now(),iteration_status='PND',iteration_estimate_SLOC=1000,iteration_SLOC=100,iteration_estimate_effort=1,iteration_effort=0,iteration_defect_injected=0,iteration_defect_removed=0)
 
       the_iteration.save()
+      the_iteration_elab.save()
+      the_iteration_cons.save()
+      the_iteration_tran.save()
       
       the_project_id = str(the_project.id)
       
@@ -348,9 +651,11 @@ def create_iteration_m(request, username, project_id):
     if request.POST:
       iterationname = request.POST['iterationname']
       phasename = request.POST['phasename']
+      iterationesloc = request.POST['iterationESLOC']
+      iterationete = request.POST['iterationETE']
       the_phase = Phase.objects.filter(project=the_project).get(phase_name=phasename)
 
-      the_iteration = Iteration(project=the_project,phase=the_phase,iteration_name=iterationname,iteration_start_date=timezone.now(),iteration_status='PND',iteration_estimate_SLOC=0,iteration_SLOC=0,iteration_estimate_effort=0,iteration_effort=0,iteration_defect_injected=0,iteration_defect_removed=0)
+      the_iteration = Iteration(project=the_project,phase=the_phase,iteration_name=iterationname,iteration_start_date=timezone.now(),iteration_status='PND',iteration_estimate_SLOC=iterationesloc,iteration_SLOC=0,iteration_estimate_effort=iterationete,iteration_effort=0,iteration_defect_injected=0,iteration_defect_removed=0)
 
       the_iteration.save()
 
@@ -368,15 +673,14 @@ def edit_iteration_m(request, username, project_id, iteration_id):
     
     if request.POST:
       iterationname = request.POST['iterationname']
-      iterationstatus = request.POST['iterationstatus']
-      
       the_iteration.iteration_name = iterationname
-      the_iteration.iteration_status = iterationstatus
-      
       the_iteration.save()
     
     if request.user.is_authenticated() and request.user.groups.filter(name='Manager').exists():
       return HttpResponseRedirect('/ise_pdt/manager/'+username+'/'+project_id+'/'+iteration_id+'/')
+    else:
+      return HttpResponseRedirect('/ise_pdt/logout')
+  
   
   
 def delete_iteration_m(request, username, project_id, iteration_id):
@@ -387,3 +691,17 @@ def delete_iteration_m(request, username, project_id, iteration_id):
     
     return HttpResponseRedirect('/ise_pdt/manager/'+username+'/'+project_id+'/')
   
+  
+@csrf_exempt 
+def report_defect(request):
+    if request.POST:
+      d_type = request.POST['d_type']
+      iteration_oi_id = request.POST['iteration_oi']
+      d_desc = request.POST['d_desc']
+
+      the_iteration = Iteration.objects.get(id = iteration_oi_id)
+      the_defect = Defect(defect_type=d_type,description=d_desc,iteration_of_injection=the_iteration)
+
+      the_defect.save()
+
+    return HttpResponse('')

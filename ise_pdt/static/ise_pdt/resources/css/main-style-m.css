@@ -79,6 +79,30 @@
   color: #CD5C5C;
 }
 
+.bottom-controls {
+  position: absolute;
+  bottom: 0;
+  height: 35px;
+  background-color: #4F4F4F;
+  border-top: 2px solid #3B3B3B;
+  z-index: 999;
+}
+
+.bottom-controls .next-iter-button {
+  position: absolute;
+  color: #fff;
+  font-size: 140%;
+  bottom: 55%;
+  right: 2.5%;
+  -webkit-transform: translateY(50%);
+  -ms-transform: translateY(50%);
+  transform: translateY(50%);
+}
+
+.bottom-controls .next-iter-button span {
+  margin-right: 5px;
+}
+
 
 /* summary tab */
 

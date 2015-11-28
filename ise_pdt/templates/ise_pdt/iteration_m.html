@@ -96,10 +96,10 @@
           <div class="col-xs-5">
             <table class="user-time-summary-table summary phase">
                 <tr>
-                  <th colspan="2">Time Based</th>
+                  <th colspan="2">Time Based Metrics</th>
                 </tr>
                 <tr class="data-row">
-                  <td class="data-right-border">Estimate Delivered Lines of Code</td>
+                  <td class="data-right-border">Estimated Delivered Lines of Code</td>
                   <td>123 lines</td>
                 </tr>
                 <tr class="data-row">
@@ -107,11 +107,11 @@
                   <td>123 lines</td>
                 </tr>
                 <tr class="data-row">
-                  <td class="data-right-border">Time Effort</td>
+                  <td class="data-right-border">Estimated Time Effort</td>
                   <td>15 person-month</td>
                 </tr>
                 <tr class="data-row">
-                  <td class="data-right-border">Estimated Time Effort</td>
+                  <td class="data-right-border">Time Effort</td>
                   <td>50 person-month</td>
                 </tr>
                 <tr class="data-row no-bottom-border">
@@ -123,14 +123,14 @@
           <div class="col-xs-5">
             <table class="user-time-summary-table summary phase">
                 <tr>
-                  <th colspan="2">Size Based</th>
+                  <th colspan="2">Size Based Metrics</th>
                 </tr>
                 <tr class="data-row">
-                  <td class="data-right-border">Total Number of Defects Injected</td>
+                  <td class="data-right-border">Number of Defects Injected</td>
                   <td>123 lines</td>
                 </tr>
                 <tr class="data-row">
-                  <td class="data-right-border">Total Number of Defects Removed</td>
+                  <td class="data-right-border">Number of Defects Removed</td>
                   <td>123 lines</td>
                 </tr>
                 <tr class="data-row">
@@ -157,14 +157,6 @@
             <div class="controls">
               <label>Iteration Name: </label>
               <input type="text" id="iterationname" name="iterationname" placeholder="Iteration Name" autocomplete="off" value="{{the_iteration.iteration_name}}">
-            </div>
-            <div class="controls">
-              <label>Iteration Status:</label>
-              <select name="iterationstatus" id="iterationstatus">
-                <option {% if the_iteration.iteration_status == 'ACT' %} selected="selected" {% endif %} value="ACT">Active</option>
-                <option {% if the_iteration.iteration_status == 'CLS' %} selected="selected" {% endif %} value="CLS">Closed</option>
-                <option {% if the_iteration.iteration_status == 'PND' %} selected="selected" {% endif %} value="PND">Pending</option>
-              </select>
             </div>
 
            <input type="hidden" id="userjs_i" name="userjs_i" value="{{ the_user.username }}">

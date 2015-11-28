@@ -351,10 +351,11 @@ a:active {
   color: #fff;
 }
 
+
 .timer {
   position: absolute;
   top: 53%;
-  left: 50%;
+  left: 25%;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -364,6 +365,31 @@ a:active {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   padding: 50px;
+}
+
+.random {
+  position: absolute;
+  top: 53%;
+  left: 75%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.defect-table {
+  margin-top: 20px;
+  border: 1px solid #3B3B3B;
+  
+}
+
+.defect-table th {
+  border: 1px solid #3B3B3B;
+  padding: 10px;
+}
+
+.defect-table td {
+  border: 1px solid #3B3B3B;
+  padding: 10px;
 }
 
 .timer p {

@@ -78,38 +78,23 @@
             {{the_project.project_name}}
           </div>
         </div>      
-        <p class="iteration-creation-title">Create Iteration</p>
-        <form class="create_elem_form iteration" name="CreateElemForm" action="/ise_pdt/manager/{{username}}/{{the_project.id}}/createiteration/" method="post">
+        <p class="iteration-creation-title">Proceed To Next Iteration</p>
+        <form class="create_elem_form iteration" name="CreateElemForm" action="/ise_pdt/manager/{{username}}/{{the_project.id}}/nextiteration/" method="post">
           {% csrf_token %} {% if next %}
           <input type="hidden" name="next" value="{{ next }}" /> {% endif %}
           
           <div class="controls">
-            <label></label>
-            <input type="text" id="iterationname" name="iterationname" placeholder="Iteration Name" autocomplete="off">
+            <label>Delivered Lines of Code: </label>
+            <input type="number" id="p_iterationSLOC" name="p_iterationSLOC" placeholder="Iteration SLOC" autocomplete="off">
           </div>
           
           <div class="controls">
-            <label>Select Phase:</label>
-            <select name="phasename" id="phasename">
-              <option value="INCP">Inception</option>
-              <option value="ELAB">Elaboration</option>
-              <option value="CONS">Construction</option>
-              <option value="TRAN">Transition</option>
-            </select>
-          </div>
-          
-          <div class="controls">
-            <label>Estimated Delivered Lines of Code: </label>
-            <input type="number" id="iterationESLOC" name="iterationESLOC" placeholder="Iteration Estimate SLOC" autocomplete="off">
-          </div>
-          
-          <div class="controls">
-            <label>Estimated Time Effort: </label>
-            <input type="number" id="iterationETE" name="iterationETE" placeholder="Iteration Estimate Effort" autocomplete="off">
+            <label>Time Effort: </label>
+            <input type="number" id="p_iterationTE" name="p_iterationTE" placeholder="Iteration Effort" autocomplete="off">
           </div>
            
           <div class="controls">
-            <button type="submit" class="btn">Create</button>
+            <button type="submit" class="btn">Activate Next Iteration</button>
           </div>
           
         </form>

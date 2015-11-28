@@ -95,7 +95,10 @@ $(document).ready(function(){
 		localStorage.setItem("location", "_man");
 		start_onclick()
 	})
-	
+    
+    $('#report_btn').on("click", function() {  
+		report_defect();
+    });
 	//check_url_target();
 	check_url_target_2();
 
@@ -303,3 +306,29 @@ function delete_iteration_prompt() {
 }
 
 
+function report_defect() {
+	var iteration=JSON.parse($("#iteration_oi").val());
+	var DataVals = { 
+		d_type : $("#d_type").val(), 
+		d_desc : $("#d_desc").val(), 
+		iteration_oi : iteration.i_id
+	}
+
+	$.ajax({
+		  type: 'POST',
+		  url: "/ise_pdt/reportdefect",
+		  data: DataVals,
+		  dataType: "text",
+		  async: false,
+		  success: function() {
+		  	var table = document.getElementById("defect-table");
+		  	var row = table.insertRow();
+		  	var cell1 = row.insertCell();
+		  	var cell2 = row.insertCell();
+		  	var cell3 = row.insertCell();
+		  	cell1.innerHTML = DataVals.d_type;
+		  	cell2.innerHTML = DataVals.d_desc;
+		  	cell3.innerHTML = iteration.i_name;
+		  }
+	});	
+}
